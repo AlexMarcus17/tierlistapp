@@ -1,1 +1,7 @@
 *.dart linguist-language=Dart
+*.yaml linguist-language=Dart
+*.gradle linguist-language=Dart
+
+android/* linguist-vendored
+ios/* linguist-vendored
+build/* linguist-vendored
