@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:hive/hive.dart';
+import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 
 part 'tier_item_image.g.dart';

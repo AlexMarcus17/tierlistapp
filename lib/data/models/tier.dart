@@ -7,7 +7,7 @@ const int tierTypeId = 1;
 @HiveType(typeId: tierTypeId)
 class Tier {
   @HiveField(0)
-  final String label;
+  final String? label;
 
   Tier({required this.label});
 }

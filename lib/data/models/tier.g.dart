@@ -17,7 +17,7 @@ class TierAdapter extends TypeAdapter<Tier> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Tier(
-      label: fields[0] as String,
+      label: fields[0] as String?,
     );
   }
 

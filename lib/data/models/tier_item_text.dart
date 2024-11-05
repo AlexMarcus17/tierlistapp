@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 
 part 'tier_item_text.g.dart';
@@ -12,7 +13,7 @@ class TierItemText extends TierListItem {
 
   TierItemText({
     required super.id,
-    super.tier,
+    required super.tier,
     required this.text,
   });
 }

@@ -18,7 +18,7 @@ class TierItemImageAdapter extends TypeAdapter<TierItemImage> {
     };
     return TierItemImage(
       id: fields[0] as String,
-      tier: fields[1] as String?,
+      tier: fields[1] as Tier,
       imageFile: fields[2] as File,
     );
   }

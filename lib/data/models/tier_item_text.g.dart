@@ -18,7 +18,7 @@ class TierItemTextAdapter extends TypeAdapter<TierItemText> {
     };
     return TierItemText(
       id: fields[0] as String,
-      tier: fields[1] as String?,
+      tier: fields[1] as Tier,
       text: fields[2] as String,
     );
   }
