@@ -40,4 +40,8 @@ class DBHelper {
   Future<List<TierList>> getAllTierLists() async {
     return _tierListBox?.values.toList().cast<TierList>() ?? [];
   }
+
+  Future<void> resetUserTierLists() async {
+    await _tierListBox?.clear();
+  }
 }

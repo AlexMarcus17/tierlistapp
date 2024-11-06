@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive/hive.dart';
+
 import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 
@@ -26,4 +28,20 @@ class TierList {
     required this.itemsMatrix,
     required this.uncategorizedItems,
   });
+
+  TierList copyWith({
+    String? id,
+    String? name,
+    List<Tier>? tiers,
+    List<List<TierListItem>>? itemsMatrix,
+    List<TierListItem>? uncategorizedItems,
+  }) {
+    return TierList(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      tiers: tiers ?? this.tiers,
+      itemsMatrix: itemsMatrix ?? this.itemsMatrix,
+      uncategorizedItems: uncategorizedItems ?? this.uncategorizedItems,
+    );
+  }
 }
