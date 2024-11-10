@@ -1,17 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 import 'package:tierlist/data/models/tier_item_image.dart';
 import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 
+@injectable
 class EditorProvider with ChangeNotifier {
   TierList _tierList;
   bool _viewTiers = false;
   bool _viewInfo = false;
 
-  EditorProvider({TierList? existingTierList})
+  EditorProvider(@factoryParam TierList? existingTierList)
       : _tierList = existingTierList ??
             TierList(
               id: DateTime.now().toIso8601String(),

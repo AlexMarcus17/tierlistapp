@@ -1,16 +1,11 @@
 import 'package:tierlist/data/database/db_helper.dart';
 import 'package:tierlist/data/models/tier_list.dart';
-import 'package:tierlist/data/sources/popular_tier_lists.dart';
 
 class TierListRepository {
-  static final TierListRepository _instance = TierListRepository._internal();
-  factory TierListRepository() => _instance;
+  final DBHelper _dbHelper;
+  final List<TierList> _popularTierLists;
 
-  TierListRepository._internal();
-
-  final DBHelper _dbHelper = DBHelper();
-
-  final List<TierList> _popularTierLists = PopularTierLists.popularTierLists;
+  TierListRepository(this._dbHelper, this._popularTierLists);
 
   Future<void> init() async {
     await _dbHelper.init();
