@@ -20,6 +20,8 @@ class TierList {
   final List<List<TierListItem>> itemsMatrix;
   @HiveField(4)
   final List<TierListItem> uncategorizedItems;
+  @HiveField(5)
+  final String imagePath;
 
   TierList({
     required this.id,
@@ -27,6 +29,7 @@ class TierList {
     required this.tiers,
     required this.itemsMatrix,
     required this.uncategorizedItems,
+    required this.imagePath,
   });
 
   TierList copyWith({
@@ -35,6 +38,7 @@ class TierList {
     List<Tier>? tiers,
     List<List<TierListItem>>? itemsMatrix,
     List<TierListItem>? uncategorizedItems,
+    String? imagePath,
   }) {
     return TierList(
       id: id ?? this.id,
@@ -42,6 +46,7 @@ class TierList {
       tiers: tiers ?? this.tiers,
       itemsMatrix: itemsMatrix ?? this.itemsMatrix,
       uncategorizedItems: uncategorizedItems ?? this.uncategorizedItems,
+      imagePath: imagePath ?? this.imagePath,
     );
   }
 }

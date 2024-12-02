@@ -30,6 +30,7 @@ class TierListRepository {
       tiers: popularTierList.tiers,
       itemsMatrix: popularTierList.itemsMatrix,
       uncategorizedItems: popularTierList.uncategorizedItems,
+      imagePath: "lib/assets/images/tierlistcard.png",
     );
     await addUserTierList(userTierList);
   }

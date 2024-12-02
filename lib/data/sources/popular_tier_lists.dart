@@ -59,7 +59,7 @@ class PopularTierLists {
           imageFile: File('lib/data/sources/images/kebab.jpg')),
       TierItemImage(
           id: 'salad',
-          tier: tierC,
+          tier: tierB,
           imageFile: File('lib/data/sources/images/salad.jpg')),
       TierItemImage(
           id: 'sushi',
@@ -100,6 +100,7 @@ class PopularTierLists {
     ];
 
     final fastFoodTierList = TierList(
+      imagePath: "lib/data/sources/images/list_images/fastfood.png",
       id: 'fast_food_tier_list',
       name: 'Fast Food Tier List',
       tiers: [tierS, tierA, tierB, tierC, tierD],
@@ -118,13 +119,13 @@ class PopularTierLists {
           items[6],
           items[7],
           items[8],
+          items[11],
         ],
         [
           items[9],
           items[10],
         ],
         [
-          items[11],
           items[12],
           items[13],
           items[14],
@@ -202,6 +203,7 @@ class PopularTierLists {
     ];
 
     final sportsTierList = TierList(
+      imagePath: "lib/data/sources/images/list_images/sports.png",
       id: 'sports_tier_list',
       name: 'Sports Tier List',
       tiers: [tierS, tierA, tierB, tierC, tierD],

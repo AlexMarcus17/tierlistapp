@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive/hive.dart';
+
 import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 
@@ -16,4 +18,15 @@ class TierItemText extends TierListItem {
     required super.tier,
     required this.text,
   });
+
+  TierItemText copyWith({
+    String? text,
+    Tier? tier,
+  }) {
+    return TierItemText(
+      id: id,
+      tier: tier ?? this.tier,
+      text: text ?? this.text,
+    );
+  }
 }

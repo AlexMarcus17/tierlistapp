@@ -24,13 +24,14 @@ class TierListAdapter extends TypeAdapter<TierList> {
           .map((dynamic e) => (e as List).cast<TierListItem>())
           .toList(),
       uncategorizedItems: (fields[4] as List).cast<TierListItem>(),
+      imagePath: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TierList obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,7 +41,9 @@ class TierListAdapter extends TypeAdapter<TierList> {
       ..writeByte(3)
       ..write(obj.itemsMatrix)
       ..writeByte(4)
-      ..write(obj.uncategorizedItems);
+      ..write(obj.uncategorizedItems)
+      ..writeByte(5)
+      ..write(obj.imagePath);
   }
 
   @override

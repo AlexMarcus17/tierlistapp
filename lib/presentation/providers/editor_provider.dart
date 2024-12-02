@@ -10,12 +10,11 @@ import 'package:tierlist/data/models/tier_list.dart';
 @injectable
 class EditorProvider with ChangeNotifier {
   TierList _tierList;
-  bool _viewTiers = false;
-  bool _viewInfo = false;
 
   EditorProvider(@factoryParam TierList? existingTierList)
       : _tierList = existingTierList ??
             TierList(
+              imagePath: "lib/assets/images/tierlistcard.png",
               id: DateTime.now().toIso8601String(),
               name: 'New Tier List',
               tiers: [
@@ -30,8 +29,6 @@ class EditorProvider with ChangeNotifier {
             );
 
   TierList get tierList => _tierList;
-  bool get viewTiers => _viewTiers;
-  bool get viewInfo => _viewInfo;
 
   void changeTierListName(String newName) {
     _tierList = _tierList.copyWith(name: newName);
@@ -41,7 +38,7 @@ class EditorProvider with ChangeNotifier {
   void addNewTextItem(String text) {
     final newItem = TierItemText(
         id: DateTime.now().toIso8601String(),
-        tier: _tierList.tiers.first,
+        tier: Tier(label: null),
         text: text);
     _tierList.uncategorizedItems.add(newItem);
     notifyListeners();
@@ -56,45 +53,31 @@ class EditorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setViewTiers() {
-    _viewTiers = true;
+  void changeTiers(List<String> newTierLabels) {
+    List<Tier> updatedTiers = List.generate(5, (index) {
+      return _tierList.tiers[index].copyWith(label: newTierLabels[index]);
+    });
+
+    List<List<TierListItem>> updatedItemMatrix =
+        _tierList.itemsMatrix.map((row) {
+      return row.map((item) {
+        if (item is TierItemText) {
+          return item.copyWith(
+              tier: updatedTiers[_tierList.tiers.indexOf(item.tier)]);
+        } else if (item is TierItemImage) {
+          return item.copyWith(
+              tier: updatedTiers[_tierList.tiers.indexOf(item.tier)]);
+        }
+        return item;
+      }).toList();
+    }).toList();
+
+    _tierList = _tierList.copyWith(
+      tiers: updatedTiers,
+      itemsMatrix: updatedItemMatrix,
+    );
+
     notifyListeners();
-  }
-
-  void setViewItems() {
-    _viewTiers = false;
-    _viewInfo = false;
-    notifyListeners();
-  }
-
-  void setViewInfo() {
-    _viewInfo = true;
-    notifyListeners();
-  }
-
-  void addNewTier(String label) {
-    final newTier = Tier(label: label);
-    _tierList.tiers.add(newTier);
-    _tierList.itemsMatrix.add([]);
-    notifyListeners();
-  }
-
-  void changeTierName(int tierIndex, String newLabel) {
-    if (tierIndex < _tierList.tiers.length && newLabel.isNotEmpty) {
-      _tierList.tiers[tierIndex] =
-          _tierList.tiers[tierIndex].copyWith(label: newLabel);
-      notifyListeners();
-    }
-  }
-
-  void removeTier(int tierIndex) {
-    if (tierIndex < _tierList.tiers.length && _tierList.tiers.length > 1) {
-      _tierList.tiers.removeAt(tierIndex);
-      _tierList.itemsMatrix.removeAt(tierIndex);
-      notifyListeners();
-    } else {
-      throw Exception('Cannot remove the last tier.');
-    }
   }
 
   void changeItemPlace(TierListItem item, int? newTierIndex, int newIndex) {
@@ -110,7 +93,7 @@ class EditorProvider with ChangeNotifier {
       item.tier = _tierList.tiers[newTierIndex];
       _tierList.itemsMatrix[newTierIndex].insert(newIndex, item);
     } else if (newTierIndex == null) {
-      item.tier = _tierList.tiers.first;
+      item.tier = Tier(label: null);
       _tierList.uncategorizedItems.insert(newIndex, item);
     }
 
@@ -133,10 +116,6 @@ class EditorProvider with ChangeNotifier {
   }
 
   void download() {
-    // Functionality to be implemented later
-  }
-
-  void share() {
     // Functionality to be implemented later
   }
 }

@@ -23,6 +23,12 @@ dependencies:
   get_it: ^7.7.0
   injectable: ^2.4.2
   dotted_border: ^2.1.0
+  zoom_tap_animation: ^1.1.0
+  image_picker: ^1.1.2
+  crop_your_image: ^1.1.0
+  permission_handler: ^11.3.1
+  path: ^1.9.0
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +48,7 @@ flutter:
 
   assets:
     - assets/images/
+    - lib/data/sources/images/list_images/
   fonts:
     - family: Food Zone
       fonts:

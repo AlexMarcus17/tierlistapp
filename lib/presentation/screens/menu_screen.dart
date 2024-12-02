@@ -1,6 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:tierlist/app/theme/app_theme.dart';
+import 'package:tierlist/app/utils/utils.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -31,7 +33,7 @@ class MenuScreen extends StatelessWidget {
               color: Theme.of(context).white,
               icon: const Icon(Icons.settings),
               onPressed: () {
-                // Add settings navigation or functionality here
+                Utils.showSettings(context);
               },
             ),
           ),
