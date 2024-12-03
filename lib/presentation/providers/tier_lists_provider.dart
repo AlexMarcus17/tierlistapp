@@ -13,6 +13,14 @@ class TierListsProvider with ChangeNotifier {
     _userTierLists.removeWhere((t) => t.id == id);
     notifyListeners();
   }
+
+  void renameTierList(String id, String newName) {
+    final index = _userTierLists.indexWhere((t) => t.id == id);
+    if (index != -1) {
+      _userTierLists[index] = _userTierLists[index].copyWith(name: newName);
+      notifyListeners();
+    }
+  }
 }
 
 // class TierListsProvider with ChangeNotifier {
@@ -43,6 +51,14 @@ class TierListsProvider with ChangeNotifier {
 //     _userTierLists.add(tierList);
 //     notifyListeners();
 //   }
+
+  // void renameTierList(String id, String newName) {
+  //   final index = _userTierLists.indexWhere((t) => t.id == id);
+  //   if (index != -1) {
+  //     _userTierLists[index] = _userTierLists[index].copyWith(name: newName);
+  //     notifyListeners();
+  //   }
+  // }
 
 //   Future<void> addPopularTierList(TierList popularTierList) async {
 //     await _repository.addPopularTierList(popularTierList);

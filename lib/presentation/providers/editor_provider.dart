@@ -44,10 +44,51 @@ class EditorProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeItemTextById(String id, String newText) {
+    for (int i = 0; i < _tierList.uncategorizedItems.length; i++) {
+      if (_tierList.uncategorizedItems[i] is TierItemText &&
+          _tierList.uncategorizedItems[i].id == id) {
+        _tierList.uncategorizedItems[i] =
+            (_tierList.uncategorizedItems[i] as TierItemText)
+                .copyWith(text: newText);
+        notifyListeners();
+        return;
+      }
+    }
+
+    for (int tierIndex = 0;
+        tierIndex < _tierList.itemsMatrix.length;
+        tierIndex++) {
+      for (int itemIndex = 0;
+          itemIndex < _tierList.itemsMatrix[tierIndex].length;
+          itemIndex++) {
+        final item = _tierList.itemsMatrix[tierIndex][itemIndex];
+        if (item is TierItemText && item.id == id) {
+          _tierList.itemsMatrix[tierIndex][itemIndex] =
+              item.copyWith(text: newText);
+          notifyListeners();
+          return;
+        }
+      }
+    }
+  }
+
+  void deleteItemById(String id) {
+    _tierList.uncategorizedItems.removeWhere((item) => item.id == id);
+
+    for (int tierIndex = 0;
+        tierIndex < _tierList.itemsMatrix.length;
+        tierIndex++) {
+      _tierList.itemsMatrix[tierIndex].removeWhere((item) => item.id == id);
+    }
+
+    notifyListeners();
+  }
+
   void addNewImageItem(File imageFile) {
     final newItem = TierItemImage(
         id: DateTime.now().toIso8601String(),
-        tier: _tierList.tiers.first,
+        tier: Tier(label: null),
         imageFile: imageFile);
     _tierList.uncategorizedItems.add(newItem);
     notifyListeners();
@@ -83,10 +124,11 @@ class EditorProvider with ChangeNotifier {
   void changeItemPlace(TierListItem item, int? newTierIndex, int newIndex) {
     final oldTierIndex =
         _tierList.tiers.indexWhere((tier) => tier == item.tier);
+
     if (oldTierIndex >= 0) {
-      _tierList.itemsMatrix[oldTierIndex].remove(item);
+      _tierList.itemsMatrix[oldTierIndex].removeWhere((i) => i.id == item.id);
     } else {
-      _tierList.uncategorizedItems.remove(item);
+      _tierList.uncategorizedItems.removeWhere((i) => i.id == item.id);
     }
 
     if (newTierIndex != null && newTierIndex < _tierList.tiers.length) {
@@ -97,16 +139,6 @@ class EditorProvider with ChangeNotifier {
       _tierList.uncategorizedItems.insert(newIndex, item);
     }
 
-    notifyListeners();
-  }
-
-  void deleteTierItem(TierListItem item) {
-    final tierIndex = _tierList.tiers.indexWhere((tier) => tier == item.tier);
-    if (tierIndex >= 0) {
-      _tierList.itemsMatrix[tierIndex].remove(item);
-    } else {
-      _tierList.uncategorizedItems.remove(item);
-    }
     notifyListeners();
   }
 

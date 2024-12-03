@@ -10,40 +10,47 @@ class PopularTierListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      color: const Color(0xFF424242),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
+    return InkWell(
+      onTap: () {
+        //navigate to tier list screen
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        color: const Color(0xFF424242),
+        elevation: 4,
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                bottomLeft: Radius.circular(16),
+              ),
+              child: Image.asset(tierList.imagePath, width: 100),
             ),
-            child: Image.asset(tierList.imagePath, width: 100),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(tierList.name,
-                    style: Theme.of(context).textTheme.titleMedium),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(tierList.name,
+                      style: Theme.of(context).textTheme.titleMedium),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            //dialog
+                          },
+                          icon: Icon(Icons.add)),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

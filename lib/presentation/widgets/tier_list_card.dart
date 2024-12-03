@@ -1,53 +1,141 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
 
-class TierListCard extends StatelessWidget {
+class TierListCard extends StatefulWidget {
   final TierList tierList;
 
-  const TierListCard({Key? key, required this.tierList}) : super(key: key);
+  const TierListCard({super.key, required this.tierList});
+
+  @override
+  State<TierListCard> createState() => _TierListCardState();
+}
+
+class _TierListCardState extends State<TierListCard> {
+  bool isEditing = false;
+  TextEditingController controller = TextEditingController();
+  @override
+  void didChangeDependencies() {
+    controller.text = widget.tierList.name;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      color: const Color(0xFF424242),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              bottomLeft: Radius.circular(16),
+    return InkWell(
+      onTap: () {
+        if (isEditing) {
+          setState(() {
+            controller.text = widget.tierList.name;
+            isEditing = false;
+          });
+        }
+        //navigate to tier list screen
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        color: const Color(0xFF424242),
+        elevation: 4,
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                bottomLeft: Radius.circular(16),
+              ),
+              child: Image.asset(widget.tierList.imagePath, width: 120),
             ),
-            child: Image.asset(tierList.imagePath, width: 100),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(tierList.name,
-                    style: Theme.of(context).textTheme.titleMedium),
-                Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
-                    IconButton(
-                        onPressed: () {
-                          Provider.of<TierListsProvider>(context, listen: false)
-                              .deleteUserTierList(tierList.id);
-                        },
-                        icon: Icon(Icons.delete)),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isEditing
+                      ? Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: controller,
+                                  maxLength: 20,
+                                  decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                  ),
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    if (controller.text.trim().isNotEmpty) {
+                                      Provider.of<TierListsProvider>(context,
+                                              listen: false)
+                                          .renameTierList(widget.tierList.id,
+                                              controller.text.trim());
+
+                                      setState(() {
+                                        isEditing = false;
+                                      });
+                                    }
+                                  },
+                                  icon: Icon(Icons.check)),
+                            ],
+                          ),
+                        )
+                      : Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: Text(widget.tierList.name,
+                              style: Theme.of(context).textTheme.titleMedium),
+                        ),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (isEditing) {
+                              setState(() {
+                                controller.text = widget.tierList.name;
+                                isEditing = false;
+                              });
+                            } else {
+                              setState(() {
+                                isEditing = true;
+                              });
+                            }
+                          },
+                          icon: Icon(Icons.edit)),
+                      IconButton(
+                          onPressed: () {
+                            //display dialog before deleting
+                            Provider.of<TierListsProvider>(context,
+                                    listen: false)
+                                .deleteUserTierList(widget.tierList.id);
+                          },
+                          icon: Icon(Icons.delete)),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

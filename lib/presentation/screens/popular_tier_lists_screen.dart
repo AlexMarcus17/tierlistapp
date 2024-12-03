@@ -45,16 +45,6 @@ class PopularTierListsScreen extends StatelessWidget {
             color: Colors.transparent,
             child: IconButton(
               color: Theme.of(context).white,
-              icon: const Icon(Icons.info),
-              onPressed: () {},
-            ),
-          ),
-          Material(
-            elevation: 30,
-            shape: const CircleBorder(),
-            color: Colors.transparent,
-            child: IconButton(
-              color: Theme.of(context).white,
               icon: const Icon(Icons.settings),
               onPressed: () {
                 Utils.showSettings(context);

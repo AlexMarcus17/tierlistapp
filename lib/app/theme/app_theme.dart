@@ -10,6 +10,8 @@ class AppColors {
   static const fTierColor = Color.fromARGB(255, 126, 0, 216);
   static const whiteColor = Color.fromARGB(255, 220, 220, 220);
   static const blackColor = Color.fromARGB(255, 14, 14, 14);
+  static const greyColor = Color.fromARGB(255, 47, 47, 47);
+
   static const lightGreyColor = Color.fromARGB(255, 165, 165, 165);
 }
 
@@ -23,6 +25,7 @@ extension CustomTheme on ThemeData {
   Color get fTier => AppColors.fTierColor;
   Color get white => AppColors.whiteColor;
   Color get black => AppColors.blackColor;
+  Color get grey => AppColors.greyColor;
 }
 
 class AppTheme {

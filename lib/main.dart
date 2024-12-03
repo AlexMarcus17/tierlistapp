@@ -14,6 +14,7 @@ import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
 import 'package:tierlist/presentation/screens/editor_screen.dart';
 import 'package:tierlist/presentation/screens/menu_screen.dart';
 import 'package:tierlist/presentation/screens/my_tier_lists_screen.dart';
+import 'package:tierlist/presentation/screens/popular_list_screen.dart';
 import 'package:tierlist/presentation/screens/popular_tier_lists_screen.dart';
 
 void main() {
@@ -31,12 +32,7 @@ class MenuScreenTestApp extends StatelessWidget {
       },
       child: MaterialApp(
         theme: AppTheme.theme,
-        home: ChangeNotifierProvider(
-          create: (BuildContext context) {
-            return EditorProvider(PopularTierLists.popularTierLists[0]);
-          },
-          child: EditorScreen(),
-        ),
+        home: PopularListScreen(tierList: PopularTierLists.popularTierLists[0]),
         debugShowCheckedModeBanner: false,
       ),
     );
