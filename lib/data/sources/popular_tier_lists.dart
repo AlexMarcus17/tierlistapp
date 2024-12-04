@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:tierlist/data/models/tier_item_image.dart';
+import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/data/models/tier.dart';
 
@@ -224,6 +225,21 @@ class PopularTierLists {
       uncategorizedItems: [],
     );
 
-    return [fastFoodTierList, sportsTierList];
+    final testTierList = TierList(
+      imagePath: "assets/images/tierlistcard.png",
+      id: 'sports_tier_list',
+      name: 'Sports Tier List',
+      tiers: [tierS, tierA, tierB, tierC, tierD],
+      itemsMatrix: [
+        [TierItemText(id: "rrrr", tier: tierS, text: "rrr")],
+        [TierItemText(id: "aaaa", tier: tierA, text: "rrr")],
+        [TierItemText(id: "rrrsssr", tier: tierB, text: "rrr")],
+        [TierItemText(id: "dd", tier: tierC, text: "rrr")],
+        [TierItemText(id: "rrraar", tier: tierD, text: "rrr")],
+      ],
+      uncategorizedItems: [],
+    );
+
+    return [fastFoodTierList, sportsTierList, testTierList];
   }
 }

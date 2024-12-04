@@ -122,13 +122,38 @@ class _TierListCardState extends State<TierListCard> {
                           },
                           icon: Icon(Icons.edit)),
                       IconButton(
-                          onPressed: () {
-                            //display dialog before deleting
-                            Provider.of<TierListsProvider>(context,
-                                    listen: false)
-                                .deleteUserTierList(widget.tierList.id);
+                          onPressed: () async {
+                            bool? shouldDelete = await showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Confirm Deletion'),
+                                content: const Text(
+                                    'Are you sure you want to delete this tier list?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: const Text('Delete',
+                                        style: TextStyle(color: Colors.red)),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                            if (shouldDelete == true) {
+                              Provider.of<TierListsProvider>(context,
+                                      listen: false)
+                                  .deleteUserTierList(widget.tierList.id);
+                            }
                           },
-                          icon: Icon(Icons.delete)),
+                          icon: const Icon(Icons.delete)),
                     ],
                   )
                 ],

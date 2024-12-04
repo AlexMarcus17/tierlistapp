@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 //import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +24,22 @@ class EditorScreen extends StatefulWidget {
 }
 
 class _EditorScreenState extends State<EditorScreen> {
+  final GlobalKey repaintBoundaryKey = GlobalKey();
+
+  Future<Uint8List?> captureTierList() async {
+    try {
+      final boundary = repaintBoundaryKey.currentContext?.findRenderObject()
+          as RenderRepaintBoundary?;
+      ui.Image image = await boundary!.toImage(pixelRatio: 1.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+      return byteData!.buffer.asUint8List();
+    } catch (e) {
+      print("Error capturing image: $e");
+      return null;
+    }
+  }
+
   final TextEditingController addtextcontroller = TextEditingController();
 
   late TextEditingController tier1controller;
@@ -108,7 +128,7 @@ class _EditorScreenState extends State<EditorScreen> {
           ),
         ],
       ),
-      body: TierListScreen(),
+      body: TierListScreen(repaintBoundaryKey),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
@@ -326,8 +346,28 @@ class _EditorScreenState extends State<EditorScreen> {
                   size: 30,
                 ),
                 tooltip: 'Download',
-                onPressed: () {
-                  // Action to download
+                onPressed: () async {
+                  var status = await Permission.photos.request();
+                  if (status.isGranted || status.isLimited) {
+                    var img = await captureTierList();
+                    if (img == null) {
+                      return;
+                    }
+                    ImageGallerySaver.saveImage(img);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Tier List saved to gallery',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          backgroundColor: Theme.of(context).primaryColorDark,
+                        ),
+                      );
+                    }
+                  } else {
+                    openAppSettings();
+                  }
                 },
               ),
             ),

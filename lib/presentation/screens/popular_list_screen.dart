@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:tierlist/app/theme/app_theme.dart';
 import 'package:tierlist/app/utils/utils.dart';
 import 'package:tierlist/data/models/tier.dart';
@@ -26,6 +27,8 @@ class PopularListScreen extends StatefulWidget {
 }
 
 class _PopularListScreenState extends State<PopularListScreen> {
+  final SuperTooltipController toolTipController = SuperTooltipController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +62,23 @@ class _PopularListScreenState extends State<PopularListScreen> {
             elevation: 30,
             shape: const CircleBorder(),
             color: Colors.transparent,
-            child: IconButton(
-              color: Theme.of(context).white,
-              icon: const Icon(Icons.info),
-              onPressed: () {},
+            child: SuperTooltip(
+              showBarrier: true,
+              content: const Text(
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr,",
+                softWrap: true,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              controller: toolTipController,
+              child: IconButton(
+                color: Theme.of(context).white,
+                icon: const Icon(Icons.info),
+                onPressed: () async {
+                  await toolTipController.showTooltip();
+                },
+              ),
             ),
           ),
         ],

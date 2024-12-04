@@ -11,6 +11,8 @@ import 'package:tierlist/presentation/providers/editor_provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class TierListScreen extends StatefulWidget {
+  GlobalKey gkey;
+  TierListScreen(this.gkey);
   @override
   _TierListScreenState createState() => _TierListScreenState();
 }
@@ -28,15 +30,19 @@ class _TierListScreenState extends State<TierListScreen> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ...tierList.tiers.asMap().entries.map(
-                        (entry) {
-                          final tierIndex = entry.key;
-                          return buildTier(editorProvider, tierList, tierIndex);
-                        },
-                      ),
-                    ],
+                  child: RepaintBoundary(
+                    key: widget.gkey,
+                    child: Column(
+                      children: [
+                        ...tierList.tiers.asMap().entries.map(
+                          (entry) {
+                            final tierIndex = entry.key;
+                            return buildTier(
+                                editorProvider, tierList, tierIndex);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

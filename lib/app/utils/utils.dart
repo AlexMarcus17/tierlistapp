@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class Utils {
@@ -20,6 +22,18 @@ class Utils {
       return pickedFile;
     } catch (e) {
       return null;
+    }
+  }
+
+  static Future<void> deleteAllImageFiles() async {
+    final Directory appDir = await getApplicationDocumentsDirectory();
+
+    final List<FileSystemEntity> files = appDir.listSync();
+
+    for (var file in files) {
+      if (file is File) {
+        await file.delete();
+      }
     }
   }
 
@@ -82,7 +96,64 @@ class Utils {
                               Column(
                                 children: [
                                   ZoomTapAnimation(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      bool? shouldReset = await showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: Text('Confirm Reset'),
+                                          content: const Text(
+                                              'Are you sure you want to reset the app? This will delete all your tier lists.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(false);
+                                              },
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true);
+                                              },
+                                              child: const Text('Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+
+                                      if (shouldReset == true) {
+                                        if (context.mounted) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Scaffold(
+                                                body: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                          await Provider.of<TierListsProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .resetUserTierLists();
+                                          await deleteAllImageFiles();
+                                          if (context.mounted) {
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'App reset successfully'),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      }
+                                    },
                                     child: Container(
                                       height: 40,
                                       width: 170,

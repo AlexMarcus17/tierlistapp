@@ -40,8 +40,31 @@ class PopularTierListCard extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                          onPressed: () {
-                            //dialog
+                          onPressed: () async {
+                            bool? shouldAdd = await showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Add to My Tier Lists'),
+                                content: const Text(
+                                    'Are you sure you want to add this to My Tier Lists?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: const Text('Yes'),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                            if (shouldAdd == true) {}
                           },
                           icon: Icon(Icons.add)),
                     ],

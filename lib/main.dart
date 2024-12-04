@@ -32,7 +32,7 @@ class MenuScreenTestApp extends StatelessWidget {
       },
       child: MaterialApp(
         theme: AppTheme.theme,
-        home: PopularListScreen(tierList: PopularTierLists.popularTierLists[0]),
+        home: MenuScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
