@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
+import 'package:tierlist/presentation/screens/editor_screen.dart';
 
 class TierListCard extends StatefulWidget {
   final TierList tierList;
@@ -32,7 +33,8 @@ class _TierListCardState extends State<TierListCard> {
             isEditing = false;
           });
         }
-        //navigate to tier list screen
+        Navigator.of(context)
+            .pushNamed(EditorScreen.routeName, arguments: widget.tierList);
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -123,12 +125,21 @@ class _TierListCardState extends State<TierListCard> {
                           icon: Icon(Icons.edit)),
                       IconButton(
                           onPressed: () async {
+                            setState(() {
+                              isEditing = false;
+                            });
                             bool? shouldDelete = await showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: Text('Confirm Deletion'),
-                                content: const Text(
-                                    'Are you sure you want to delete this tier list?'),
+                                title: Text(
+                                  'Confirm Deletion',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                content: Text(
+                                  'Are you sure you want to delete this tier list?',
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
                                 actions: [
                                   TextButton(
                                     onPressed: () {

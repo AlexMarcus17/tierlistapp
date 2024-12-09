@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tierlist/app/routes/app_router.dart';
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => getIt<TierListsProvider>(),
       child: MaterialApp(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: 'Tier List Maker',
         theme: AppTheme.theme,

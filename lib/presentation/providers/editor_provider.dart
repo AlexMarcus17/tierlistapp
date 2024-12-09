@@ -10,11 +10,12 @@ import 'package:tierlist/data/models/tier_list.dart';
 @injectable
 class EditorProvider with ChangeNotifier {
   TierList _tierList;
+  late bool _isNewTierList;
 
   EditorProvider(@factoryParam TierList? existingTierList)
       : _tierList = existingTierList ??
             TierList(
-              imagePath: "lib/assets/images/tierlistcard.png",
+              imagePath: "assets/images/tierlistcard.png",
               id: DateTime.now().toIso8601String(),
               name: 'New Tier List',
               tiers: [
@@ -26,9 +27,12 @@ class EditorProvider with ChangeNotifier {
               ],
               itemsMatrix: [[], [], [], [], []],
               uncategorizedItems: [],
-            );
+            ) {
+    _isNewTierList = existingTierList == null;
+  }
 
   TierList get tierList => _tierList;
+  bool get isNewTierList => _isNewTierList;
 
   void changeTierListName(String newName) {
     _tierList = _tierList.copyWith(name: newName);
@@ -89,7 +93,7 @@ class EditorProvider with ChangeNotifier {
     final newItem = TierItemImage(
         id: DateTime.now().toIso8601String(),
         tier: Tier(label: null),
-        imageFile: imageFile);
+        imageFile: imageFile.path);
     _tierList.uncategorizedItems.add(newItem);
     notifyListeners();
   }

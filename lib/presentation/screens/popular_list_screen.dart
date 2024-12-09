@@ -1,25 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 import 'package:tierlist/app/theme/app_theme.dart';
-import 'package:tierlist/app/utils/utils.dart';
-import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 import 'package:tierlist/data/models/tier_item_image.dart';
 import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
-import 'package:tierlist/presentation/providers/editor_provider.dart';
-import 'package:tierlist/presentation/screens/crop_image_screen.dart';
-import 'package:tierlist/presentation/widgets/tier_list_widget.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class PopularListScreen extends StatefulWidget {
-  TierList tierList;
-  PopularListScreen({super.key, required this.tierList});
+  final TierList tierList;
+  const PopularListScreen({super.key, required this.tierList});
   static const String routeName = '/popularlist';
 
   @override
@@ -134,7 +125,7 @@ Widget buildTier(TierList tierList, int tierIndex, BuildContext context) {
   }
 
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 2),
+    margin: const EdgeInsets.symmetric(vertical: 2),
     color: Theme.of(context).scaffoldBackgroundColor,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +139,7 @@ Widget buildTier(TierList tierList, int tierIndex, BuildContext context) {
               child: Center(
                 child: Text(
                   tier.label ?? "Uncategorized",
-                  style: TextStyle(color: Colors.white),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ),
@@ -215,7 +206,7 @@ Widget buildDraggableItem(TierListItem item, BuildContext context) {
     width: 75,
     height: 75,
     decoration: BoxDecoration(
-      color: Color.fromARGB(255, 29, 86, 255),
+      color: Theme.of(context).item,
       borderRadius: BorderRadius.circular(8),
     ),
     child: item is TierItemText
@@ -234,7 +225,7 @@ Widget buildDraggableItem(TierListItem item, BuildContext context) {
         : ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.file(
-              (item as TierItemImage).imageFile,
+              File((item as TierItemImage).imageFile),
               fit: BoxFit.cover,
             ),
           ),

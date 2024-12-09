@@ -21,18 +21,6 @@ class TierListRepository {
     await _dbHelper.addTierList(tierList);
   }
 
-  Future<void> addPopularTierList(TierList popularTierList) async {
-    final userTierList = TierList(
-      id: DateTime.now().toIso8601String(),
-      name: popularTierList.name,
-      tiers: popularTierList.tiers,
-      itemsMatrix: popularTierList.itemsMatrix,
-      uncategorizedItems: popularTierList.uncategorizedItems,
-      imagePath: "lib/assets/images/tierlistcard.png",
-    );
-    await addUserTierList(userTierList);
-  }
-
   Future<void> updateTierList(TierList updatedTierList) async {
     await _dbHelper.updateTierList(updatedTierList);
   }

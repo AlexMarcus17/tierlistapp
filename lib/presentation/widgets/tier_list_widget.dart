@@ -1,8 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tierlist/app/theme/app_theme.dart';
-import 'package:tierlist/data/models/tier.dart';
 import 'package:tierlist/data/models/tier_item.dart';
 import 'package:tierlist/data/models/tier_item_image.dart';
 import 'package:tierlist/data/models/tier_item_text.dart';
@@ -11,10 +11,10 @@ import 'package:tierlist/presentation/providers/editor_provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class TierListWidget extends StatefulWidget {
-  GlobalKey gkey;
-  TierListWidget(this.gkey);
+  final GlobalKey gkey;
+  const TierListWidget(this.gkey, {super.key});
   @override
-  _TierListWidgetState createState() => _TierListWidgetState();
+  State<TierListWidget> createState() => _TierListWidgetState();
 }
 
 class _TierListWidgetState extends State<TierListWidget> {
@@ -446,8 +446,8 @@ class _TierListWidgetState extends State<TierListWidget> {
                                                     const BorderRadius.all(
                                                         Radius.circular(15)),
                                                 child: Image.file(
-                                                  (item as TierItemImage)
-                                                      .imageFile,
+                                                  File((item as TierItemImage)
+                                                      .imageFile),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -525,8 +525,8 @@ class _TierListWidgetState extends State<TierListWidget> {
         height: 70,
         decoration: BoxDecoration(
           color: dragging
-              ? Color.fromARGB(255, 29, 86, 255).withOpacity(0.5)
-              : Color.fromARGB(255, 29, 86, 255),
+              ? Theme.of(context).item.withOpacity(0.5)
+              : Theme.of(context).item,
           borderRadius: BorderRadius.circular(8),
         ),
         child: item is TierItemText
@@ -545,7 +545,7 @@ class _TierListWidgetState extends State<TierListWidget> {
             : ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.file(
-                  (item as TierItemImage).imageFile,
+                  File((item as TierItemImage).imageFile),
                   fit: BoxFit.cover,
                 ),
               ),

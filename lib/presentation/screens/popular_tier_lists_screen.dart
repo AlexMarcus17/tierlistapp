@@ -4,7 +4,6 @@ import 'package:tierlist/app/theme/app_theme.dart';
 import 'package:tierlist/app/utils/utils.dart';
 import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
 import 'package:tierlist/presentation/widgets/popular_tier_list_card.dart';
-import 'package:tierlist/presentation/widgets/tier_list_card.dart';
 
 class PopularTierListsScreen extends StatelessWidget {
   const PopularTierListsScreen({super.key});
@@ -61,9 +60,9 @@ class PopularTierListsScreen extends StatelessWidget {
 
           return ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: provider.userTierLists.length,
+            itemCount: provider.popularTierLists.length,
             itemBuilder: (context, index) {
-              final tierList = provider.userTierLists[index];
+              final tierList = provider.popularTierLists[index];
               return PopularTierListCard(tierList: tierList);
             },
           );

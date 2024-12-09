@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
-
 import 'package:hive/hive.dart';
 
 import 'package:tierlist/data/models/tier.dart';
@@ -13,7 +10,7 @@ const int tierListItemImageTypeId = 3;
 @HiveType(typeId: tierListItemImageTypeId)
 class TierItemImage extends TierListItem {
   @HiveField(2)
-  final File imageFile;
+  final String imageFile;
 
   TierItemImage({
     required super.id,
@@ -22,7 +19,7 @@ class TierItemImage extends TierListItem {
   });
 
   TierItemImage copyWith({
-    File? imageFile,
+    String? imageFile,
     Tier? tier,
   }) {
     return TierItemImage(

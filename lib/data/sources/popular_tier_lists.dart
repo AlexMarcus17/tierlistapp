@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:tierlist/data/models/tier_item_image.dart';
 import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
@@ -17,87 +15,87 @@ class PopularTierLists {
       TierItemImage(
           id: 'burger',
           tier: tierS,
-          imageFile: File('lib/data/sources/images/burger.jpg')),
+          imageFile: 'lib/data/sources/images/burger.jpg'),
       TierItemImage(
           id: 'pizza',
           tier: tierS,
-          imageFile: File('lib/data/sources/images/pizza.jpg')),
+          imageFile: 'lib/data/sources/images/pizza.jpg'),
       TierItemImage(
           id: 'tacos',
           tier: tierA,
-          imageFile: File('lib/data/sources/images/tacos.jpg')),
+          imageFile: 'lib/data/sources/images/tacos.jpg'),
       TierItemImage(
           id: 'fries',
           tier: tierA,
-          imageFile: File('lib/data/sources/images/fries.jpg')),
+          imageFile: 'lib/data/sources/images/fries.jpg'),
       TierItemImage(
           id: 'chicken_nuggets',
           tier: tierA,
-          imageFile: File('lib/data/sources/images/chicken_nuggets.jpg')),
+          imageFile: 'lib/data/sources/images/chicken_nuggets.jpg'),
       TierItemImage(
           id: 'hot_dog',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/hot_dog.jpg')),
+          imageFile: 'lib/data/sources/images/hot_dog.jpg'),
       TierItemImage(
           id: 'onion_rings',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/onion_rings.jpg')),
+          imageFile: 'lib/data/sources/images/onion_rings.jpg'),
       TierItemImage(
           id: 'milkshake',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/milkshake.jpg')),
+          imageFile: 'lib/data/sources/images/milkshake.jpg'),
       TierItemImage(
           id: 'sandwich',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/sandwich.jpg')),
+          imageFile: 'lib/data/sources/images/sandwich.jpg'),
       TierItemImage(
           id: 'wrap',
           tier: tierC,
-          imageFile: File('lib/data/sources/images/wrap.jpg')),
+          imageFile: 'lib/data/sources/images/wrap.jpg'),
       TierItemImage(
           id: 'kebab',
           tier: tierC,
-          imageFile: File('lib/data/sources/images/kebab.jpg')),
+          imageFile: 'lib/data/sources/images/kebab.jpg'),
       TierItemImage(
           id: 'salad',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/salad.jpg')),
+          imageFile: 'lib/data/sources/images/salad.jpg'),
       TierItemImage(
           id: 'sushi',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/sushi.jpg')),
+          imageFile: 'lib/data/sources/images/sushi.jpg'),
       TierItemImage(
           id: 'burrito',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/burrito.jpg')),
+          imageFile: 'lib/data/sources/images/burrito.jpg'),
       TierItemImage(
           id: 'pasta',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/pasta.jpg')),
+          imageFile: 'lib/data/sources/images/pasta.jpg'),
       TierItemImage(
           id: 'tater_tots',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/tater_tots.jpg')),
+          imageFile: 'lib/data/sources/images/tater_tots.jpg'),
       TierItemImage(
           id: 'nachos',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/nachos.jpg')),
+          imageFile: 'lib/data/sources/images/nachos.jpg'),
       TierItemImage(
           id: 'chips',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/chips.jpg')),
+          imageFile: 'lib/data/sources/images/chips.jpg'),
       TierItemImage(
           id: 'mozzarella_sticks',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/mozzarella_sticks.jpg')),
+          imageFile: 'lib/data/sources/images/mozzarella_sticks.jpg'),
       TierItemImage(
           id: 'cheesesteak',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/cheesesteak.jpg')),
+          imageFile: 'lib/data/sources/images/cheesesteak.jpg'),
       TierItemImage(
           id: 'corn_dog',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/corn_dog.jpg')),
+          imageFile: 'lib/data/sources/images/corn_dog.jpg'),
     ];
 
     final fastFoodTierList = TierList(
@@ -144,63 +142,63 @@ class PopularTierLists {
       TierItemImage(
           id: 'soccer',
           tier: tierS,
-          imageFile: File('lib/data/sources/images/soccer.jpg')),
+          imageFile: 'lib/data/sources/images/soccer.jpg'),
       TierItemImage(
           id: 'basketball',
           tier: tierS,
-          imageFile: File('lib/data/sources/images/basketball.jpg')),
+          imageFile: 'lib/data/sources/images/basketball.jpg'),
       TierItemImage(
           id: 'tennis',
           tier: tierA,
-          imageFile: File('lib/data/sources/images/tennis.jpg')),
+          imageFile: 'lib/data/sources/images/tennis.jpg'),
       TierItemImage(
           id: 'baseball',
           tier: tierA,
-          imageFile: File('lib/data/sources/images/baseball.jpg')),
+          imageFile: 'lib/data/sources/images/baseball.jpg'),
       TierItemImage(
           id: 'cricket',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/cricket.jpg')),
+          imageFile: 'lib/data/sources/images/cricket.jpg'),
       TierItemImage(
           id: 'hockey',
           tier: tierB,
-          imageFile: File('lib/data/sources/images/hockey.jpg')),
+          imageFile: 'lib/data/sources/images/hockey.jpg'),
       TierItemImage(
           id: 'golf',
           tier: tierC,
-          imageFile: File('lib/data/sources/images/golf.jpg')),
+          imageFile: 'lib/data/sources/images/golf.jpg'),
       TierItemImage(
           id: 'swimming',
           tier: tierC,
-          imageFile: File('lib/data/sources/images/swimming.jpg')),
+          imageFile: 'lib/data/sources/images/swimming.jpg'),
       TierItemImage(
           id: 'boxing',
           tier: tierC,
-          imageFile: File('lib/data/sources/images/boxing.jpg')),
+          imageFile: 'lib/data/sources/images/boxing.jpg'),
       TierItemImage(
           id: 'rugby',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/rugby.jpg')),
+          imageFile: 'lib/data/sources/images/rugby.jpg'),
       TierItemImage(
           id: 'cycling',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/cycling.jpg')),
+          imageFile: 'lib/data/sources/images/cycling.jpg'),
       TierItemImage(
           id: 'badminton',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/badminton.jpg')),
+          imageFile: 'lib/data/sources/images/badminton.jpg'),
       TierItemImage(
           id: 'table_tennis',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/table_tennis.jpg')),
+          imageFile: 'lib/data/sources/images/table_tennis.jpg'),
       TierItemImage(
           id: 'skiing',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/skiing.jpg')),
+          imageFile: 'lib/data/sources/images/skiing.jpg'),
       TierItemImage(
           id: 'snowboarding',
           tier: tierD,
-          imageFile: File('lib/data/sources/images/snowboarding.jpg')),
+          imageFile: 'lib/data/sources/images/snowboarding.jpg'),
     ];
 
     final sportsTierList = TierList(
@@ -255,6 +253,6 @@ class PopularTierLists {
       uncategorizedItems: [],
     );
 
-    return [fastFoodTierList, sportsTierList, testTierList, testTierList2];
+    return [fastFoodTierList, testTierList2];
   }
 }

@@ -102,9 +102,16 @@ class Utils {
                                       bool? shouldReset = await showDialog(
                                         context: context,
                                         builder: (context) => AlertDialog(
-                                          title: Text('Confirm Reset'),
-                                          content: const Text(
-                                              'Are you sure you want to reset the app? This will delete all your tier lists.'),
+                                          title: Text('Confirm Reset',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium),
+                                          content: Text(
+                                            'Are you sure you want to reset the app? This will delete all your tier lists.',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                          ),
                                           actions: [
                                             TextButton(
                                               onPressed: () {
@@ -145,11 +152,18 @@ class Utils {
                                           await deleteAllImageFiles();
                                           if (context.mounted) {
                                             Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
+                                              SnackBar(
                                                 content: Text(
-                                                    'App reset successfully'),
+                                                    'App reset successfully',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall),
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .primaryColorDark,
                                               ),
                                             );
                                           }
