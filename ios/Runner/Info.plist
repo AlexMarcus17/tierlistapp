@@ -49,5 +49,11 @@
 	<string>This app requires access to your photo library to upload images.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>We need access to your photos to add images.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  	<string>mailto</string>
+	<string>http</string>
+	<string>https</string>
+	</array>
 </dict>
 </plist>

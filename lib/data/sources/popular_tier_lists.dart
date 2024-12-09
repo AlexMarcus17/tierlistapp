@@ -240,6 +240,21 @@ class PopularTierLists {
       uncategorizedItems: [],
     );
 
-    return [fastFoodTierList, sportsTierList, testTierList];
+    final testTierList2 = TierList(
+      imagePath: "assets/images/tierlistcard.png",
+      id: 'sports_tier_list',
+      name: 'Sports Tier List',
+      tiers: [tierS, tierA, tierB, tierC, tierD],
+      itemsMatrix: [
+        [TierItemText(id: "rrrr", tier: tierS, text: "rrr")],
+        [TierItemText(id: "aaaa", tier: tierA, text: "rrr")],
+        [TierItemText(id: "rrrsssr", tier: tierB, text: "rrr")],
+        [TierItemText(id: "dd", tier: tierC, text: "rrr")],
+        [],
+      ],
+      uncategorizedItems: [],
+    );
+
+    return [fastFoodTierList, sportsTierList, testTierList, testTierList2];
   }
 }

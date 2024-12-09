@@ -1,16 +1,41 @@
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:tierlist/data/models/tier.dart';
+import 'package:tierlist/data/models/tier_item_image.dart';
+import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 
 class DBHelper {
   static const String tierListBoxName = 'tierListBox';
   Box<TierList>? _tierListBox;
 
-  Future<void> init() async {
-    if (!Hive.isBoxOpen(tierListBoxName)) {
-      _tierListBox = await Hive.openBox<TierList>(tierListBoxName);
-    } else {
-      _tierListBox = Hive.box<TierList>(tierListBoxName);
+  DBHelper._();
+
+  static Future<DBHelper> init() async {
+    final directory = await getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(TierListAdapter());
     }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(TierAdapter());
+    }
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(TierItemTextAdapter());
+    }
+    if (!Hive.isAdapterRegistered(3)) {
+      Hive.registerAdapter(TierItemImageAdapter());
+    }
+    final dbHelper = DBHelper._();
+
+    if (!Hive.isBoxOpen(tierListBoxName)) {
+      dbHelper._tierListBox = await Hive.openBox<TierList>(tierListBoxName);
+    } else {
+      dbHelper._tierListBox = Hive.box<TierList>(tierListBoxName);
+    }
+
+    return dbHelper;
   }
 
   Future<void> addTierList(TierList tierList) async {

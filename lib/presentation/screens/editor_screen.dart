@@ -12,7 +12,7 @@ import 'package:tierlist/app/theme/app_theme.dart';
 import 'package:tierlist/app/utils/utils.dart';
 import 'package:tierlist/presentation/providers/editor_provider.dart';
 import 'package:tierlist/presentation/screens/crop_image_screen.dart';
-import 'package:tierlist/presentation/screens/tierlistscreen.dart';
+import 'package:tierlist/presentation/widgets/tier_list_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class EditorScreen extends StatefulWidget {
@@ -128,7 +128,7 @@ class _EditorScreenState extends State<EditorScreen> {
           ),
         ],
       ),
-      body: TierListScreen(repaintBoundaryKey),
+      body: TierListWidget(repaintBoundaryKey),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
@@ -158,151 +158,164 @@ class _EditorScreenState extends State<EditorScreen> {
                 ),
                 tooltip: 'Add Text',
                 onPressed: () {
-                  showGeneralDialog(
-                    barrierLabel: "",
-                    barrierDismissible: true,
-                    transitionDuration: const Duration(milliseconds: 250),
-                    transitionBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      return ScaleTransition(
-                        scale: Tween<double>(begin: 0.0, end: 1.0).animate(
-                          CurvedAnimation(
-                            parent: animation,
-                            curve: Curves.easeInOut,
-                          ),
+                  if (Provider.of<EditorProvider>(context, listen: false)
+                      .hasReachedMaxItems()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'You have reached the maximum number of items',
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
-                        child: child,
-                      );
-                    },
-                    context: context,
-                    pageBuilder: (ctx, _, __) {
-                      return Scaffold(
-                        backgroundColor: Colors.transparent,
-                        body: Center(
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  height: 270,
-                                  width: 240,
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      border: Border.all(
-                                          width: 3,
-                                          color: Theme.of(context)
-                                              .primaryColorLight),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(15))),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            "Add Text Item",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium,
-                                          ),
-                                          Column(
-                                            children: [
-                                              TextField(
-                                                controller: addtextcontroller,
-                                                maxLength: 15,
-                                                decoration: InputDecoration(
-                                                  hintText: "Enter text here",
-                                                  hintStyle: Theme.of(context)
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                      ),
+                    );
+                  } else {
+                    showGeneralDialog(
+                      barrierLabel: "",
+                      barrierDismissible: true,
+                      transitionDuration: const Duration(milliseconds: 250),
+                      transitionBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return ScaleTransition(
+                          scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            ),
+                          ),
+                          child: child,
+                        );
+                      },
+                      context: context,
+                      pageBuilder: (ctx, _, __) {
+                        return Scaffold(
+                          backgroundColor: Colors.transparent,
+                          body: Center(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    height: 270,
+                                    width: 240,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        border: Border.all(
+                                            width: 3,
+                                            color: Theme.of(context)
+                                                .primaryColorLight),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              "Add Text Item",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium,
+                                            ),
+                                            Column(
+                                              children: [
+                                                TextField(
+                                                  controller: addtextcontroller,
+                                                  maxLength: 15,
+                                                  decoration: InputDecoration(
+                                                    hintText: "Enter text here",
+                                                    hintStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                  ),
+                                                  style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                  ),
                                                 ),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
-                                              ),
-                                              ZoomTapAnimation(
-                                                onTap: () {
-                                                  final text = addtextcontroller
-                                                      .text
-                                                      .trim();
-                                                  if (text.isNotEmpty) {
-                                                    final editorProvider =
-                                                        Provider.of<
-                                                                EditorProvider>(
-                                                            context,
-                                                            listen: false);
-                                                    editorProvider
-                                                        .addNewTextItem(text);
+                                                ZoomTapAnimation(
+                                                  onTap: () {
+                                                    final text =
+                                                        addtextcontroller.text
+                                                            .trim();
+                                                    if (text.isNotEmpty) {
+                                                      final editorProvider =
+                                                          Provider.of<
+                                                                  EditorProvider>(
+                                                              context,
+                                                              listen: false);
+                                                      editorProvider
+                                                          .addNewTextItem(text);
 
-                                                    addtextcontroller.clear();
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  height: 40,
-                                                  width: 170,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                              Radius.circular(
-                                                                  3)),
-                                                      color: Theme.of(context)
-                                                          .primaryColorDark),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Save",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall,
+                                                      addtextcontroller.clear();
+                                                      Navigator.pop(context);
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    height: 40,
+                                                    width: 170,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                                Radius.circular(
+                                                                    3)),
+                                                        color: Theme.of(context)
+                                                            .primaryColorDark),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Save",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      addtextcontroller.clear();
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: SizedBox(
-                                        height: 32,
-                                        width: 32,
-                                        child: Image.asset(
-                                            "assets/images/close.png"),
+                                Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        addtextcontroller.clear();
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: SizedBox(
+                                          height: 32,
+                                          width: 32,
+                                          child: Image.asset(
+                                              "assets/images/close.png"),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -316,23 +329,37 @@ class _EditorScreenState extends State<EditorScreen> {
                 ),
                 tooltip: 'Add Image',
                 onPressed: () async {
-                  var status = await Permission.photos.request();
-                  if (status.isGranted || status.isLimited) {
-                    var pickedImage = await Utils.pickImage();
-
-                    if (pickedImage != null && context.mounted) {
-                      File? savedImage = await Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return CropImageScreen(imageFile: pickedImage);
-                      }));
-                      if (savedImage != null && context.mounted) {
-                        final editorProvider =
-                            Provider.of<EditorProvider>(context, listen: false);
-                        editorProvider.addNewImageItem(savedImage);
-                      }
-                    }
+                  if (Provider.of<EditorProvider>(context, listen: false)
+                      .hasReachedMaxItems()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'You have reached the maximum number of items',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        backgroundColor: Theme.of(context).primaryColorDark,
+                      ),
+                    );
                   } else {
-                    openAppSettings();
+                    var status = await Permission.photos.request();
+                    if (status.isGranted || status.isLimited) {
+                      var pickedImage = await Utils.pickImage();
+
+                      if (pickedImage != null && context.mounted) {
+                        File? savedImage = await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return CropImageScreen(imageFile: pickedImage);
+                        }));
+                        if (savedImage != null && context.mounted) {
+                          final editorProvider = Provider.of<EditorProvider>(
+                              context,
+                              listen: false);
+                          editorProvider.addNewImageItem(savedImage);
+                        }
+                      }
+                    } else {
+                      openAppSettings();
+                    }
                   }
                 },
               ),

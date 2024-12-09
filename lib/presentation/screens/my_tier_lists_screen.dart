@@ -57,6 +57,14 @@ class MyTierListsScreen extends StatelessWidget {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (provider.userTierLists.isEmpty) {
+            return const Center(
+              child: Text(
+                'You have not created any tier lists yet.',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
 
           return ListView.builder(
             padding: const EdgeInsets.all(16),

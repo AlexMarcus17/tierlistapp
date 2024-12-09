@@ -24,7 +24,7 @@ class EditorProvider with ChangeNotifier {
                 Tier(label: 'C'),
                 Tier(label: 'D')
               ],
-              itemsMatrix: [[]],
+              itemsMatrix: [[], [], [], [], []],
               uncategorizedItems: [],
             );
 
@@ -142,12 +142,16 @@ class EditorProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool hasReachedMaxItems() {
+    final int totalItems = _tierList.uncategorizedItems.length +
+        _tierList.itemsMatrix
+            .fold(0, (sum, tierItems) => sum + tierItems.length);
+
+    return totalItems >= 50;
+  }
+
   void save(Function(TierList) saveCallback) {
     saveCallback(_tierList);
     notifyListeners();
-  }
-
-  void download() {
-    // Functionality to be implemented later
   }
 }

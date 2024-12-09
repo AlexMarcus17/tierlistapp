@@ -6,7 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class Utils {
@@ -177,7 +179,18 @@ class Utils {
                                     thickness: 2,
                                   ),
                                   ZoomTapAnimation(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      final Uri emailUri = Uri(
+                                        scheme: 'mailto',
+                                        path: 'alexmarcus5040717@gmail.com',
+                                      );
+
+                                      if (await canLaunchUrl(emailUri)) {
+                                        await launchUrl(emailUri,
+                                            mode:
+                                                LaunchMode.externalApplication);
+                                      }
+                                    },
                                     child: Container(
                                       height: 40,
                                       width: 170,
@@ -201,7 +214,23 @@ class Utils {
                                     thickness: 2,
                                   ),
                                   ZoomTapAnimation(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      final String iosUrl =
+                                          'https://apps.apple.com/app/id<APP_ID>?action=write-review';
+                                      final String androidUrl =
+                                          'market://details?id=<PACKAGE_NAME>';
+
+                                      final Uri rateUri = Uri.parse(
+                                        Theme.of(context).platform ==
+                                                TargetPlatform.iOS
+                                            ? iosUrl
+                                            : androidUrl,
+                                      );
+
+                                      if (await canLaunchUrl(rateUri)) {
+                                        await launchUrl(rateUri);
+                                      }
+                                    },
                                     child: Container(
                                       height: 40,
                                       width: 170,
@@ -225,7 +254,12 @@ class Utils {
                                     thickness: 2,
                                   ),
                                   ZoomTapAnimation(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      launchUrl(
+                                        Uri.parse('https://flutter.dev'),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
                                     child: Container(
                                       height: 40,
                                       width: 170,
@@ -249,7 +283,20 @@ class Utils {
                                     thickness: 2,
                                   ),
                                   ZoomTapAnimation(
-                                    onTap: () {},
+                                    onTap: () {
+                                      final String iosLink =
+                                          'https://apps.apple.com/app/id<APP_ID>';
+                                      final String androidLink =
+                                          'https://play.google.com/store/apps/details?id=<PACKAGE_NAME>';
+
+                                      final String appLink =
+                                          Theme.of(context).platform ==
+                                                  TargetPlatform.iOS
+                                              ? iosLink
+                                              : androidLink;
+
+                                      Share.share(appLink);
+                                    },
                                     child: Container(
                                       height: 40,
                                       width: 170,

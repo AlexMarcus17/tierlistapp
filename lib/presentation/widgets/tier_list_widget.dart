@@ -10,14 +10,14 @@ import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/presentation/providers/editor_provider.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-class TierListScreen extends StatefulWidget {
+class TierListWidget extends StatefulWidget {
   GlobalKey gkey;
-  TierListScreen(this.gkey);
+  TierListWidget(this.gkey);
   @override
-  _TierListScreenState createState() => _TierListScreenState();
+  _TierListWidgetState createState() => _TierListWidgetState();
 }
 
-class _TierListScreenState extends State<TierListScreen> {
+class _TierListWidgetState extends State<TierListWidget> {
   TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -96,8 +96,8 @@ class _TierListScreenState extends State<TierListScreen> {
               Row(
                 children: [
                   Container(
-                    width: 90,
-                    height: 80,
+                    width: 85,
+                    height: 85,
                     color: tierColor,
                     child: Center(
                       child: Text(
@@ -521,8 +521,8 @@ class _TierListScreenState extends State<TierListScreen> {
               }
             },
       child: Container(
-        width: 75,
-        height: 75,
+        width: 70,
+        height: 70,
         decoration: BoxDecoration(
           color: dragging
               ? Color.fromARGB(255, 29, 86, 255).withOpacity(0.5)

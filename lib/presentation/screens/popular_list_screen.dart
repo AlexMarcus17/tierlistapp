@@ -14,7 +14,7 @@ import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/presentation/providers/editor_provider.dart';
 import 'package:tierlist/presentation/screens/crop_image_screen.dart';
-import 'package:tierlist/presentation/screens/tierlistscreen.dart';
+import 'package:tierlist/presentation/widgets/tier_list_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class PopularListScreen extends StatefulWidget {

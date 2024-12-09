@@ -1,15 +1,13 @@
+import 'package:injectable/injectable.dart';
 import 'package:tierlist/data/database/db_helper.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 
+@singleton
 class TierListRepository {
   final DBHelper _dbHelper;
   final List<TierList> _popularTierLists;
 
   TierListRepository(this._dbHelper, this._popularTierLists);
-
-  Future<void> init() async {
-    await _dbHelper.init();
-  }
 
   Future<List<TierList>> getUserTierLists() async {
     return await _dbHelper.getAllTierLists();
@@ -37,6 +35,13 @@ class TierListRepository {
 
   Future<void> updateTierList(TierList updatedTierList) async {
     await _dbHelper.updateTierList(updatedTierList);
+  }
+
+  Future<void> renameTierList(String id, String newName) async {
+    final tierList = await _dbHelper.getTierList(id);
+    if (tierList != null) {
+      await _dbHelper.updateTierList(tierList.copyWith(name: newName));
+    }
   }
 
   Future<void> deleteUserTierList(String id) async {
