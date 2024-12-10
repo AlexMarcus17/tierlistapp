@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/presentation/providers/tier_lists_provider.dart';
@@ -58,7 +57,7 @@ class _TierListCardState extends State<TierListCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   isEditing
-                      ? Container(
+                      ? SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: Row(
@@ -97,11 +96,11 @@ class _TierListCardState extends State<TierListCard> {
                                       });
                                     }
                                   },
-                                  icon: Icon(Icons.check)),
+                                  icon: const Icon(Icons.check)),
                             ],
                           ),
                         )
-                      : Container(
+                      : SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: Text(widget.tierList.name,
@@ -122,7 +121,7 @@ class _TierListCardState extends State<TierListCard> {
                               });
                             }
                           },
-                          icon: Icon(Icons.edit)),
+                          icon: const Icon(Icons.edit)),
                       IconButton(
                           onPressed: () async {
                             setState(() {
@@ -158,7 +157,7 @@ class _TierListCardState extends State<TierListCard> {
                               ),
                             );
 
-                            if (shouldDelete == true) {
+                            if (shouldDelete == true && context.mounted) {
                               Provider.of<TierListsProvider>(context,
                                       listen: false)
                                   .deleteUserTierList(widget.tierList.id);

@@ -102,16 +102,16 @@ class EditorProvider with ChangeNotifier {
     List<Tier> updatedTiers = List.generate(5, (index) {
       return _tierList.tiers[index].copyWith(label: newTierLabels[index]);
     });
+    int currentTierIndex = -1;
 
     List<List<TierListItem>> updatedItemMatrix =
         _tierList.itemsMatrix.map((row) {
+      currentTierIndex++;
       return row.map((item) {
         if (item is TierItemText) {
-          return item.copyWith(
-              tier: updatedTiers[_tierList.tiers.indexOf(item.tier)]);
+          return item.copyWith(tier: updatedTiers[currentTierIndex]);
         } else if (item is TierItemImage) {
-          return item.copyWith(
-              tier: updatedTiers[_tierList.tiers.indexOf(item.tier)]);
+          return item.copyWith(tier: updatedTiers[currentTierIndex]);
         }
         return item;
       }).toList();

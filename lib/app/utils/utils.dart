@@ -229,9 +229,9 @@ class Utils {
                                   ),
                                   ZoomTapAnimation(
                                     onTap: () async {
-                                      final String iosUrl =
+                                      const String iosUrl =
                                           'https://apps.apple.com/app/id<APP_ID>?action=write-review';
-                                      final String androidUrl =
+                                      const String androidUrl =
                                           'market://details?id=<PACKAGE_NAME>';
 
                                       final Uri rateUri = Uri.parse(
@@ -298,9 +298,9 @@ class Utils {
                                   ),
                                   ZoomTapAnimation(
                                     onTap: () {
-                                      final String iosLink =
+                                      const String iosLink =
                                           'https://apps.apple.com/app/id<APP_ID>';
-                                      final String androidLink =
+                                      const String androidLink =
                                           'https://play.google.com/store/apps/details?id=<PACKAGE_NAME>';
 
                                       final String appLink =

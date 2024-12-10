@@ -55,12 +55,10 @@ class _PopularListScreenState extends State<PopularListScreen> {
             color: Colors.transparent,
             child: SuperTooltip(
               showBarrier: true,
-              content: const Text(
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr,",
+              content: Text(
+                "You have to add a popular list to My Tier Lists to modify it.",
                 softWrap: true,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               controller: toolTipController,
               child: IconButton(
@@ -139,7 +137,7 @@ Widget buildTier(TierList tierList, int tierIndex, BuildContext context) {
               child: Center(
                 child: Text(
                   tier.label ?? "Uncategorized",
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: TextStyle(color: Theme.of(context).white),
                 ),
               ),
             ),

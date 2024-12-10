@@ -33,7 +33,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ChangeNotifierProvider(
             create: (_) => getIt<EditorProvider>(param1: tierList),
-            child: EditorScreen(),
+            child: const EditorScreen(),
           ),
         );
 

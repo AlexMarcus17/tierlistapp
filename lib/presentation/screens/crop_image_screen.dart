@@ -7,10 +7,10 @@ import 'package:tierlist/app/utils/utils.dart';
 class CropImageScreen extends StatefulWidget {
   final XFile imageFile;
 
-  const CropImageScreen({Key? key, required this.imageFile}) : super(key: key);
+  const CropImageScreen({super.key, required this.imageFile});
 
   @override
-  _CropImageScreenState createState() => _CropImageScreenState();
+  State<CropImageScreen> createState() => _CropImageScreenState();
 }
 
 class _CropImageScreenState extends State<CropImageScreen> {

@@ -16,7 +16,7 @@ import 'package:tierlist/presentation/widgets/tier_list_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class EditorScreen extends StatefulWidget {
-  EditorScreen({super.key});
+  const EditorScreen({super.key});
   static const String routeName = '/editor';
 
   @override
@@ -30,12 +30,11 @@ class _EditorScreenState extends State<EditorScreen> {
     try {
       final boundary = repaintBoundaryKey.currentContext?.findRenderObject()
           as RenderRepaintBoundary?;
-      ui.Image image = await boundary!.toImage(pixelRatio: 1.0);
+      ui.Image image = await boundary!.toImage(pixelRatio: 6.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
       return byteData!.buffer.asUint8List();
     } catch (e) {
-      print("Error capturing image: $e");
       return null;
     }
   }
@@ -117,13 +116,13 @@ class _EditorScreenState extends State<EditorScreen> {
                           onPressed: () {
                             Navigator.of(context).pop(false);
                           },
-                          child: Text('Cancel'),
+                          child: const Text('Cancel'),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop(true);
                           },
-                          child: Text('Confirm'),
+                          child: const Text('Confirm'),
                         ),
                       ],
                     );
@@ -189,7 +188,7 @@ class _EditorScreenState extends State<EditorScreen> {
         floatingActionButton: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColorLight, // Matches app bar color
+            color: Theme.of(context).primaryColorLight,
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
@@ -246,134 +245,150 @@ class _EditorScreenState extends State<EditorScreen> {
                         pageBuilder: (ctx, _, __) {
                           return Scaffold(
                             backgroundColor: Colors.transparent,
-                            body: Center(
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Container(
-                                      height: 270,
-                                      width: 240,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          border: Border.all(
-                                              width: 3,
+                            body: FocusScope(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
+                                child: Center(
+                                  child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Container(
+                                          height: 270,
+                                          width: 240,
+                                          decoration: BoxDecoration(
                                               color: Theme.of(context)
-                                                  .primaryColorLight),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(15))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                "Add Text Item",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium,
-                                              ),
-                                              Column(
+                                                  .scaffoldBackgroundColor,
+                                              border: Border.all(
+                                                  width: 3,
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(15))),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
-                                                  TextField(
-                                                    controller:
-                                                        addtextcontroller,
-                                                    maxLength: 15,
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          "Enter text here",
-                                                      hintStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .titleSmall,
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                      ),
-                                                    ),
+                                                  Text(
+                                                    "Add Text Item",
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .titleSmall,
+                                                        .titleMedium,
                                                   ),
-                                                  ZoomTapAnimation(
-                                                    onTap: () {
-                                                      final text =
-                                                          addtextcontroller.text
-                                                              .trim();
-                                                      if (text.isNotEmpty) {
-                                                        final editorProvider =
-                                                            Provider.of<
-                                                                    EditorProvider>(
-                                                                context,
-                                                                listen: false);
-                                                        editorProvider
-                                                            .addNewTextItem(
-                                                                text);
-
-                                                        addtextcontroller
-                                                            .clear();
-                                                        Navigator.pop(context);
-                                                      }
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 170,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          3)),
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColorDark),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Save",
-                                                          style:
+                                                  Column(
+                                                    children: [
+                                                      TextField(
+                                                        controller:
+                                                            addtextcontroller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              "Enter text here",
+                                                          hintStyle:
                                                               Theme.of(context)
                                                                   .textTheme
                                                                   .titleSmall,
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                      ZoomTapAnimation(
+                                                        onTap: () {
+                                                          final text =
+                                                              addtextcontroller
+                                                                  .text
+                                                                  .trim();
+                                                          if (text.isNotEmpty) {
+                                                            final editorProvider =
+                                                                Provider.of<
+                                                                        EditorProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+                                                            editorProvider
+                                                                .addNewTextItem(
+                                                                    text);
+
+                                                            addtextcontroller
+                                                                .clear();
+                                                            Navigator.pop(
+                                                                context);
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 170,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                      Radius.circular(
+                                                                          3)),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColorDark),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "Save",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
+                                                    ],
+                                                  )
                                                 ],
-                                              )
-                                            ],
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () {
-                                          addtextcontroller.clear();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: SizedBox(
-                                            height: 32,
-                                            width: 32,
-                                            child: Image.asset(
-                                                "assets/images/close.png"),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: InkWell(
+                                            onTap: () {
+                                              addtextcontroller.clear();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: SizedBox(
+                                                height: 32,
+                                                width: 32,
+                                                child: Image.asset(
+                                                    "assets/images/close.png"),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           );
@@ -444,7 +459,7 @@ class _EditorScreenState extends State<EditorScreen> {
                       if (img == null) {
                         return;
                       }
-                      ImageGallerySaver.saveImage(img);
+                      ImageGallerySaver.saveImage(img, quality: 100);
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -492,287 +507,333 @@ class _EditorScreenState extends State<EditorScreen> {
                       pageBuilder: (ctx, _, __) {
                         return Scaffold(
                           backgroundColor: Colors.transparent,
-                          body: Center(
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    height: 600,
-                                    width: 300,
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        border: Border.all(
-                                            width: 3,
+                          body: FocusScope(
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              child: Center(
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        height: 550,
+                                        width: 300,
+                                        decoration: BoxDecoration(
                                             color: Theme.of(context)
-                                                .primaryColorLight),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Modify Tiers",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium,
-                                            ),
-                                            Column(
-                                              children: [
-                                                TextField(
-                                                  textAlign: TextAlign.center,
-                                                  controller: tier1controller,
-                                                  maxLength: 15,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
-                                                    ),
+                                                .scaffoldBackgroundColor,
+                                            border: Border.all(
+                                                width: 3,
+                                                color: Theme.of(context)
+                                                    .primaryColorLight),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(15))),
+                                        child: SingleChildScrollView(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Modify Tiers",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium,
                                                   ),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                                TextField(
-                                                  textAlign: TextAlign.center,
-                                                  controller: tier2controller,
-                                                  maxLength: 15,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
-                                                    ),
-                                                  ),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                                TextField(
-                                                  textAlign: TextAlign.center,
-                                                  controller: tier3controller,
-                                                  maxLength: 15,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
-                                                    ),
-                                                  ),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                                TextField(
-                                                  textAlign: TextAlign.center,
-                                                  controller: tier4controller,
-                                                  maxLength: 15,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
-                                                    ),
-                                                  ),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                                TextField(
-                                                  textAlign: TextAlign.center,
-                                                  controller: tier5controller,
-                                                  maxLength: 15,
-                                                  decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .primary),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
-                                                    ),
-                                                  ),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleSmall,
-                                                ),
-                                                const SizedBox(height: 10),
-                                                ZoomTapAnimation(
-                                                  onTap: () {
-                                                    final tier1text =
-                                                        tier1controller.text
-                                                            .trim();
-                                                    final tier2text =
-                                                        tier2controller.text
-                                                            .trim();
-                                                    final tier3text =
-                                                        tier3controller.text
-                                                            .trim();
-                                                    final tier4text =
-                                                        tier4controller.text
-                                                            .trim();
-                                                    final tier5text =
-                                                        tier5controller.text
-                                                            .trim();
-                                                    if (tier1text.isNotEmpty &&
-                                                        tier2text.isNotEmpty &&
-                                                        tier3text.isNotEmpty &&
-                                                        tier4text.isNotEmpty &&
-                                                        tier5text.isNotEmpty) {
-                                                      final editorProvider =
-                                                          Provider.of<
-                                                                  EditorProvider>(
-                                                              context,
-                                                              listen: false);
-                                                      editorProvider
-                                                          .changeTiers([
-                                                        tier1text,
-                                                        tier2text,
-                                                        tier3text,
-                                                        tier4text,
-                                                        tier5text,
-                                                      ]);
-
-                                                      tier1controller.text =
-                                                          tier1text;
-                                                      tier2controller.text =
-                                                          tier2text;
-                                                      tier3controller.text =
-                                                          tier3text;
-                                                      tier4controller.text =
-                                                          tier4text;
-                                                      tier5controller.text =
-                                                          tier5text;
-                                                      Navigator.pop(context);
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    height: 40,
-                                                    width: 170,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                                Radius.circular(
-                                                                    3)),
-                                                        color: Theme.of(context)
-                                                            .primaryColorDark),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "Save",
+                                                  Column(
+                                                    children: [
+                                                      TextField(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        controller:
+                                                            tier1controller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                        ),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .titleSmall,
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                                      TextField(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        controller:
+                                                            tier2controller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                      TextField(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        controller:
+                                                            tier3controller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                      TextField(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        controller:
+                                                            tier4controller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                      TextField(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        controller:
+                                                            tier5controller,
+                                                        maxLength: 15,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      ZoomTapAnimation(
+                                                        onTap: () {
+                                                          final tier1text =
+                                                              tier1controller
+                                                                  .text
+                                                                  .trim();
+                                                          final tier2text =
+                                                              tier2controller
+                                                                  .text
+                                                                  .trim();
+                                                          final tier3text =
+                                                              tier3controller
+                                                                  .text
+                                                                  .trim();
+                                                          final tier4text =
+                                                              tier4controller
+                                                                  .text
+                                                                  .trim();
+                                                          final tier5text =
+                                                              tier5controller
+                                                                  .text
+                                                                  .trim();
+                                                          if (tier1text.isNotEmpty &&
+                                                              tier2text
+                                                                  .isNotEmpty &&
+                                                              tier3text
+                                                                  .isNotEmpty &&
+                                                              tier4text
+                                                                  .isNotEmpty &&
+                                                              tier5text
+                                                                  .isNotEmpty) {
+                                                            final editorProvider =
+                                                                Provider.of<
+                                                                        EditorProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+                                                            editorProvider
+                                                                .changeTiers([
+                                                              tier1text,
+                                                              tier2text,
+                                                              tier3text,
+                                                              tier4text,
+                                                              tier5text,
+                                                            ]);
+                                                            tier1controller
+                                                                    .text =
+                                                                tier1text;
+                                                            tier2controller
+                                                                    .text =
+                                                                tier2text;
+                                                            tier3controller
+                                                                    .text =
+                                                                tier3text;
+                                                            tier4controller
+                                                                    .text =
+                                                                tier4text;
+                                                            tier5controller
+                                                                    .text =
+                                                                tier5text;
+                                                            Navigator.pop(
+                                                                context);
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 170,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                      Radius.circular(
+                                                                          3)),
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColorDark),
+                                                          child: Center(
+                                                            child: Text(
+                                                              "Save",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleSmall,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: InkWell(
-                                      onTap: () {
-                                        final provider =
-                                            Provider.of<EditorProvider>(context,
-                                                listen: false);
-                                        tier1controller.text =
-                                            provider.tierList.tiers[0].label ??
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () {
+                                            final provider =
+                                                Provider.of<EditorProvider>(
+                                                    context,
+                                                    listen: false);
+                                            tier1controller.text = provider
+                                                    .tierList.tiers[0].label ??
                                                 "S";
-                                        tier2controller.text =
-                                            provider.tierList.tiers[1].label ??
+                                            tier2controller.text = provider
+                                                    .tierList.tiers[1].label ??
                                                 "A";
-                                        tier3controller.text =
-                                            provider.tierList.tiers[2].label ??
+                                            tier3controller.text = provider
+                                                    .tierList.tiers[2].label ??
                                                 "B";
-                                        tier4controller.text =
-                                            provider.tierList.tiers[3].label ??
+                                            tier4controller.text = provider
+                                                    .tierList.tiers[3].label ??
                                                 "C";
-                                        tier5controller.text =
-                                            provider.tierList.tiers[4].label ??
+                                            tier5controller.text = provider
+                                                    .tierList.tiers[4].label ??
                                                 "D";
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: SizedBox(
-                                          height: 32,
-                                          width: 32,
-                                          child: Image.asset(
-                                              "assets/images/close.png"),
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: SizedBox(
+                                              height: 32,
+                                              width: 32,
+                                              child: Image.asset(
+                                                  "assets/images/close.png"),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         );
