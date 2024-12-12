@@ -10,7 +10,7 @@ Tier List Maker is a sleek and modern Flutter app designed to empower users to c
 
 ## 📋 Features
 
-![screenshots](https://github.com/user-attachments/assets/cf38eb55-1620-490b-83d4-aadfbce8bb9)
+![screenshots](https://github.com/user-attachments/assets/35fea87c-bc5f-4d49-bd5a-9697f03a737e)
 
 1. **Menu Screen**:
    - Create a new tier list.
