@@ -1,12 +1,11 @@
-import 'dart:io';
-
+import 'package:tierlist/app/utils/utils.dart';
 import 'package:tierlist/data/models/tier_item_image.dart';
 import 'package:tierlist/data/models/tier_item_text.dart';
 import 'package:tierlist/data/models/tier_list.dart';
 import 'package:tierlist/data/models/tier.dart';
 
 class PopularTierLists {
-  static List<TierList> get popularTierLists {
+  static Future<List<TierList>> get popularTierLists async {
     final tierS = Tier(label: 'S');
     final tierA = Tier(label: 'A');
     final tierB = Tier(label: 'B');
@@ -14,47 +13,50 @@ class PopularTierLists {
     final tierD = Tier(label: 'D');
     final uncategorized = Tier(label: null);
 
-    List<File> images = [
-      File('lib/data/sources/images/lists/food/food1.png'),
-      File('lib/data/sources/images/lists/food/food2.png'),
-      File('lib/data/sources/images/lists/food/food3.png'),
-      File('lib/data/sources/images/lists/food/food4.png'),
-      File('lib/data/sources/images/lists/food/food5.png'),
-      File('lib/data/sources/images/lists/food/food6.png'),
-      File('lib/data/sources/images/lists/food/food7.png'),
-      File('lib/data/sources/images/lists/food/food8.png'),
-      File('lib/data/sources/images/lists/food/food9.png'),
-      File('lib/data/sources/images/lists/food/food10.png'),
-      File('lib/data/sources/images/lists/food/food11.png'),
-      File('lib/data/sources/images/lists/food/food12.png'),
-      File('lib/data/sources/images/lists/food/food13.png'),
-      File('lib/data/sources/images/lists/food/food14.png'),
-      File('lib/data/sources/images/lists/places/place1.png'),
-      File('lib/data/sources/images/lists/places/place2.png'),
-      File('lib/data/sources/images/lists/places/place3.png'),
-      File('lib/data/sources/images/lists/places/place4.png'),
-      File('lib/data/sources/images/lists/places/place5.png'),
-      File('lib/data/sources/images/lists/places/place6.png'),
-      File('lib/data/sources/images/lists/places/place7.png'),
-      File('lib/data/sources/images/lists/places/place8.png'),
-      File('lib/data/sources/images/lists/places/place9.png'),
-      File('lib/data/sources/images/lists/places/place10.png'),
-      File('lib/data/sources/images/lists/places/place11.png'),
-      File('lib/data/sources/images/lists/places/place12.png'),
-      File('lib/data/sources/images/lists/sports/sport1.png'),
-      File('lib/data/sources/images/lists/sports/sport2.png'),
-      File('lib/data/sources/images/lists/sports/sport3.png'),
-      File('lib/data/sources/images/lists/sports/sport4.png'),
-      File('lib/data/sources/images/lists/sports/sport5.png'),
-      File('lib/data/sources/images/lists/sports/sport6.png'),
-      File('lib/data/sources/images/lists/sports/sport7.png'),
-      File('lib/data/sources/images/lists/sports/sport8.png'),
-      File('lib/data/sources/images/lists/sports/sport9.png'),
-      File('lib/data/sources/images/lists/sports/sport10.png'),
-      File('lib/data/sources/images/lists/sports/sport11.png'),
-      File('lib/data/sources/images/lists/sports/sport12.png'),
+    List<String> imageFiles = [
+      'lib/data/sources/images/lists/food/food1.png',
+      'lib/data/sources/images/lists/food/food2.png',
+      'lib/data/sources/images/lists/food/food3.png',
+      'lib/data/sources/images/lists/food/food4.png',
+      'lib/data/sources/images/lists/food/food5.png',
+      'lib/data/sources/images/lists/food/food6.png',
+      'lib/data/sources/images/lists/food/food7.png',
+      'lib/data/sources/images/lists/food/food8.png',
+      'lib/data/sources/images/lists/food/food9.png',
+      'lib/data/sources/images/lists/food/food10.png',
+      'lib/data/sources/images/lists/food/food11.png',
+      'lib/data/sources/images/lists/food/food12.png',
+      'lib/data/sources/images/lists/food/food13.png',
+      'lib/data/sources/images/lists/food/food14.png',
+      'lib/data/sources/images/lists/places/place1.png',
+      'lib/data/sources/images/lists/places/place2.png',
+      'lib/data/sources/images/lists/places/place3.png',
+      'lib/data/sources/images/lists/places/place4.png',
+      'lib/data/sources/images/lists/places/place5.png',
+      'lib/data/sources/images/lists/places/place6.png',
+      'lib/data/sources/images/lists/places/place7.png',
+      'lib/data/sources/images/lists/places/place8.png',
+      'lib/data/sources/images/lists/places/place9.png',
+      'lib/data/sources/images/lists/places/place10.png',
+      'lib/data/sources/images/lists/places/place11.png',
+      'lib/data/sources/images/lists/places/place12.png',
+      'lib/data/sources/images/lists/sports/sport1.png',
+      'lib/data/sources/images/lists/sports/sport2.png',
+      'lib/data/sources/images/lists/sports/sport3.png',
+      'lib/data/sources/images/lists/sports/sport4.png',
+      'lib/data/sources/images/lists/sports/sport5.png',
+      'lib/data/sources/images/lists/sports/sport6.png',
+      'lib/data/sources/images/lists/sports/sport7.png',
+      'lib/data/sources/images/lists/sports/sport8.png',
+      'lib/data/sources/images/lists/sports/sport9.png',
+      'lib/data/sources/images/lists/sports/sport10.png',
+      'lib/data/sources/images/lists/sports/sport11.png',
+      'lib/data/sources/images/lists/sports/sport12.png',
     ];
-
+    final files = (await Utils.arePopularTierListImagesSaved(imageFiles[0]))
+        ? await Utils.getPopularTierListImages(imageFiles)
+        : await Utils.savePopularTierListImages(imageFiles);
+    final filePaths = files.map((file) => file.path).toList();
     final movieGenresTierList = TierList(
       id: 'movie_genres',
       name: 'Movie Genres',
@@ -268,73 +270,33 @@ class PopularTierLists {
       tiers: [tierS, tierA, tierB, tierC, tierD],
       itemsMatrix: [
         [
-          TierItemImage(
-              id: 'food1',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/food/food1.png'),
-          TierItemImage(
-              id: 'food2',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/food/food2.png'),
-          TierItemImage(
-              id: 'food3',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/food/food3.png'),
+          TierItemImage(id: 'food1', tier: tierS, imageFile: filePaths[0]),
+          TierItemImage(id: 'food2', tier: tierS, imageFile: filePaths[1]),
+          TierItemImage(id: 'food3', tier: tierS, imageFile: filePaths[2]),
         ],
         [
-          TierItemImage(
-              id: 'food4',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/food/food4.png'),
-          TierItemImage(
-              id: 'food5',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/food/food5.png'),
-          TierItemImage(
-              id: 'food6',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/food/food6.png'),
+          TierItemImage(id: 'food4', tier: tierA, imageFile: filePaths[3]),
+          TierItemImage(id: 'food5', tier: tierA, imageFile: filePaths[4]),
+          TierItemImage(id: 'food6', tier: tierA, imageFile: filePaths[5]),
         ],
         [
-          TierItemImage(
-              id: 'food8',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/food/food8.png'),
-          TierItemImage(
-              id: 'food9',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/food/food9.png'),
+          TierItemImage(id: 'food8', tier: tierB, imageFile: filePaths[7]),
+          TierItemImage(id: 'food9', tier: tierB, imageFile: filePaths[8]),
         ],
         [
-          TierItemImage(
-              id: 'food10',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/food/food10.png'),
-          TierItemImage(
-              id: 'food11',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/food/food11.png'),
+          TierItemImage(id: 'food10', tier: tierC, imageFile: filePaths[9]),
+          TierItemImage(id: 'food11', tier: tierC, imageFile: filePaths[10]),
         ],
         [
-          TierItemImage(
-              id: 'food12',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/food/food12.png'),
-          TierItemImage(
-              id: 'food13',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/food/food13.png'),
+          TierItemImage(id: 'food12', tier: tierD, imageFile: filePaths[11]),
+          TierItemImage(id: 'food13', tier: tierD, imageFile: filePaths[12]),
         ],
       ],
       uncategorizedItems: [
         TierItemImage(
-            id: 'food14',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/food/food14.png'),
+            id: 'food14', tier: uncategorized, imageFile: filePaths[13]),
         TierItemImage(
-            id: 'food7',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/food/food7.png'),
+            id: 'food7', tier: uncategorized, imageFile: filePaths[6]),
       ],
       imagePath: 'lib/data/sources/images/list_images/food.png',
     );
@@ -345,65 +307,31 @@ class PopularTierLists {
       tiers: [tierS, tierA, tierB, tierC, tierD],
       itemsMatrix: [
         [
-          TierItemImage(
-              id: 'place1',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/places/place1.png'),
-          TierItemImage(
-              id: 'place2',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/places/place2.png'),
+          TierItemImage(id: 'place1', tier: tierS, imageFile: filePaths[14]),
+          TierItemImage(id: 'place2', tier: tierS, imageFile: filePaths[15]),
         ],
         [
-          TierItemImage(
-              id: 'place3',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/places/place3.png'),
-          TierItemImage(
-              id: 'place4',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/places/place4.png'),
+          TierItemImage(id: 'place3', tier: tierA, imageFile: filePaths[16]),
+          TierItemImage(id: 'place4', tier: tierA, imageFile: filePaths[17]),
         ],
         [
-          TierItemImage(
-              id: 'place5',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/places/place5.png'),
-          TierItemImage(
-              id: 'place6',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/places/place6.png'),
+          TierItemImage(id: 'place5', tier: tierB, imageFile: filePaths[18]),
+          TierItemImage(id: 'place6', tier: tierB, imageFile: filePaths[19]),
         ],
         [
-          TierItemImage(
-              id: 'place7',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/places/place7.png'),
-          TierItemImage(
-              id: 'place8',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/places/place8.png'),
+          TierItemImage(id: 'place7', tier: tierC, imageFile: filePaths[20]),
+          TierItemImage(id: 'place8', tier: tierC, imageFile: filePaths[21]),
         ],
         [
-          TierItemImage(
-              id: 'place9',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/places/place9.png'),
-          TierItemImage(
-              id: 'place10',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/places/place10.png'),
+          TierItemImage(id: 'place9', tier: tierD, imageFile: filePaths[22]),
+          TierItemImage(id: 'place10', tier: tierD, imageFile: filePaths[23]),
         ],
       ],
       uncategorizedItems: [
         TierItemImage(
-            id: 'place11',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/places/place11.png'),
+            id: 'place11', tier: uncategorized, imageFile: filePaths[24]),
         TierItemImage(
-            id: 'place12',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/places/place12.png'),
+            id: 'place12', tier: uncategorized, imageFile: filePaths[25]),
       ],
       imagePath: 'lib/data/sources/images/list_images/places.png',
     );
@@ -414,65 +342,31 @@ class PopularTierLists {
       tiers: [tierS, tierA, tierB, tierC, tierD],
       itemsMatrix: [
         [
-          TierItemImage(
-              id: 'sport1',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/sports/sport1.png'),
-          TierItemImage(
-              id: 'sport2',
-              tier: tierS,
-              imageFile: 'lib/data/sources/images/lists/sports/sport2.png'),
+          TierItemImage(id: 'sport1', tier: tierS, imageFile: filePaths[26]),
+          TierItemImage(id: 'sport2', tier: tierS, imageFile: filePaths[27]),
         ],
         [
-          TierItemImage(
-              id: 'sport3',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/sports/sport3.png'),
-          TierItemImage(
-              id: 'sport4',
-              tier: tierA,
-              imageFile: 'lib/data/sources/images/lists/sports/sport4.png'),
+          TierItemImage(id: 'sport3', tier: tierA, imageFile: filePaths[28]),
+          TierItemImage(id: 'sport4', tier: tierA, imageFile: filePaths[29]),
         ],
         [
-          TierItemImage(
-              id: 'sport5',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/sports/sport5.png'),
-          TierItemImage(
-              id: 'sport6',
-              tier: tierB,
-              imageFile: 'lib/data/sources/images/lists/sports/sport6.png'),
+          TierItemImage(id: 'sport5', tier: tierB, imageFile: filePaths[30]),
+          TierItemImage(id: 'sport6', tier: tierB, imageFile: filePaths[31]),
         ],
         [
-          TierItemImage(
-              id: 'sport7',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/sports/sport7.png'),
-          TierItemImage(
-              id: 'sport8',
-              tier: tierC,
-              imageFile: 'lib/data/sources/images/lists/sports/sport8.png'),
+          TierItemImage(id: 'sport7', tier: tierC, imageFile: filePaths[32]),
+          TierItemImage(id: 'sport8', tier: tierC, imageFile: filePaths[33]),
         ],
         [
-          TierItemImage(
-              id: 'sport9',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/sports/sport9.png'),
-          TierItemImage(
-              id: 'sport10',
-              tier: tierD,
-              imageFile: 'lib/data/sources/images/lists/sports/sport10.png'),
+          TierItemImage(id: 'sport9', tier: tierD, imageFile: filePaths[34]),
+          TierItemImage(id: 'sport10', tier: tierD, imageFile: filePaths[35]),
         ],
       ],
       uncategorizedItems: [
         TierItemImage(
-            id: 'sport11',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/sports/sport11.png'),
+            id: 'sport11', tier: uncategorized, imageFile: filePaths[36]),
         TierItemImage(
-            id: 'sport12',
-            tier: uncategorized,
-            imageFile: 'lib/data/sources/images/lists/sports/sport12.png'),
+            id: 'sport12', tier: uncategorized, imageFile: filePaths[37]),
       ],
       imagePath: 'lib/data/sources/images/list_images/sports.png',
     );

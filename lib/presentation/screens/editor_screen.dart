@@ -420,7 +420,11 @@ class _EditorScreenState extends State<EditorScreen> {
                         ),
                       );
                     } else {
-                      var status = await Permission.photos.request();
+                      var status = (Platform.isAndroid &&
+                              !(Platform.version.compareTo("33") >= 0))
+                          ? await Permission.storage.request()
+                          : await Permission.photos.request();
+
                       if (status.isGranted || status.isLimited) {
                         var pickedImage = await Utils.pickImage();
 
@@ -467,7 +471,10 @@ class _EditorScreenState extends State<EditorScreen> {
                   ),
                   tooltip: 'Download',
                   onPressed: () async {
-                    var status = await Permission.photos.request();
+                    var status = (Platform.isAndroid &&
+                            !(Platform.version.compareTo("33") >= 0))
+                        ? await Permission.storage.request()
+                        : await Permission.photos.request();
                     if (status.isGranted || status.isLimited) {
                       var img = await captureTierList();
                       if (img == null) {

@@ -5,8 +5,9 @@ import 'package:tierlist/data/sources/popular_tier_lists.dart';
 
 @module
 abstract class AppModule {
-  @lazySingleton
-  List<TierList> get popularTierLists => PopularTierLists.popularTierLists;
+  @preResolve
+  Future<List<TierList>> popularTierLists() =>
+      PopularTierLists.popularTierLists;
   @preResolve
   Future<DBHelper> provideDBHelper() => DBHelper.init();
 }

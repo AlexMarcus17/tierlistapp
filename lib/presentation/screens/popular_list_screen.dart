@@ -211,12 +211,13 @@ Widget buildDraggableItem(TierListItem item, BuildContext context) {
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
             child: Center(
-              child: Text(
-                item.text,
-                style: Theme.of(context).textTheme.headlineLarge,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
+              child: FittedBox(
+                child: Text(
+                  item.text,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
               ),
             ),
           )

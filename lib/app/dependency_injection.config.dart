@@ -11,8 +11,8 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../data/database/db_helper.dart' as _i3;
-import '../data/models/tier_list.dart' as _i4;
+import '../data/database/db_helper.dart' as _i4;
+import '../data/models/tier_list.dart' as _i3;
 import '../data/tier_list_repo.dart' as _i6;
 import '../presentation/providers/editor_provider.dart' as _i5;
 import '../presentation/providers/tier_lists_provider.dart' as _i7;
@@ -30,19 +30,22 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     final appModule = _$AppModule();
-    await gh.factoryAsync<_i3.DBHelper>(
+    await gh.factoryAsync<List<_i3.TierList>>(
+      () => appModule.popularTierLists(),
+      preResolve: true,
+    );
+    await gh.factoryAsync<_i4.DBHelper>(
       () => appModule.provideDBHelper(),
       preResolve: true,
     );
-    gh.lazySingleton<List<_i4.TierList>>(() => appModule.popularTierLists);
-    gh.factoryParam<_i5.EditorProvider, _i4.TierList?, dynamic>((
+    gh.factoryParam<_i5.EditorProvider, _i3.TierList?, dynamic>((
       existingTierList,
       _,
     ) =>
         _i5.EditorProvider(existingTierList));
     gh.singleton<_i6.TierListRepository>(() => _i6.TierListRepository(
-          gh<_i3.DBHelper>(),
-          gh<List<_i4.TierList>>(),
+          gh<_i4.DBHelper>(),
+          gh<List<_i3.TierList>>(),
         ));
     gh.singleton<_i7.TierListsProvider>(
         () => _i7.TierListsProvider(gh<_i6.TierListRepository>()));

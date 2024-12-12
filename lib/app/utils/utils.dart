@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,6 +47,50 @@ class Utils {
     final File savedImage = File(savedImagePath);
     await savedImage.writeAsBytes(uint8list);
     return savedImage;
+  }
+
+  static Future<List<File>> savePopularTierListImages(
+      List<String> imagePaths) async {
+    final Directory appDir = await getApplicationDocumentsDirectory();
+    final List<File> savedImages = [];
+    for (String imagePath in imagePaths) {
+      final String fileName = basename(imagePath);
+
+      final String savedImagePath = '${appDir.path}/$fileName';
+
+      final ByteData byteData = await rootBundle.load(imagePath);
+
+      final File savedImage = File(savedImagePath);
+      await savedImage.writeAsBytes(byteData.buffer.asUint8List());
+
+      savedImages.add(savedImage);
+    }
+
+    return savedImages;
+  }
+
+  static Future<List<File>> getPopularTierListImages(
+      List<String> imagePaths) async {
+    final Directory appDir = await getApplicationDocumentsDirectory();
+    final List<File> savedImages = [];
+
+    for (var imagePath in imagePaths) {
+      final String fileName = basename(imagePath);
+      final String savedImagePath = '${appDir.path}/$fileName';
+      final File savedImage = File(savedImagePath);
+      savedImages.add(savedImage);
+    }
+
+    return savedImages;
+  }
+
+  static Future<bool> arePopularTierListImagesSaved(
+      String firstImagePath) async {
+    final Directory appDir = await getApplicationDocumentsDirectory();
+    final String fileName = basename(firstImagePath);
+    final String savedImagePath = '${appDir.path}/$fileName';
+    final File savedImage = File(savedImagePath);
+    return savedImage.exists();
   }
 
   static void showSettings(BuildContext context) {
