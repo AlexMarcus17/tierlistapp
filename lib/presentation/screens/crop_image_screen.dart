@@ -35,8 +35,14 @@ class _CropImageScreenState extends State<CropImageScreen> {
 
   Future<void> saveCroppedImage(context) async {
     _cropController.crop();
+    int waitingTime = 0;
     while (_croppedImageData == null) {
+      waitingTime += 100;
       await Future.delayed(const Duration(milliseconds: 100));
+      if (waitingTime > 4000) {
+        Navigator.of(context).pop(null);
+        return;
+      }
     }
     if (_croppedImageData != null) {
       final savedImage = await Utils.saveImagePermanently(
@@ -69,14 +75,12 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Cancel Button
                         ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pop(null);
                           },
                           child: const Text("Cancel"),
                         ),
-
                         ElevatedButton(
                           onPressed: () {
                             setState(() {

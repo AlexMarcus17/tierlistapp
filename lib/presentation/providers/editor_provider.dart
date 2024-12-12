@@ -34,11 +34,6 @@ class EditorProvider with ChangeNotifier {
   TierList get tierList => _tierList;
   bool get isNewTierList => _isNewTierList;
 
-  void changeTierListName(String newName) {
-    _tierList = _tierList.copyWith(name: newName);
-    notifyListeners();
-  }
-
   void addNewTextItem(String text) {
     final newItem = TierItemText(
         id: DateTime.now().toIso8601String(),
@@ -126,8 +121,8 @@ class EditorProvider with ChangeNotifier {
   }
 
   void changeItemPlace(TierListItem item, int? newTierIndex, int newIndex) {
-    final oldTierIndex =
-        _tierList.tiers.indexWhere((tier) => tier == item.tier);
+    final oldTierIndex = _tierList.itemsMatrix.indexWhere(
+        (tierItems) => tierItems.indexWhere((i) => i.id == item.id) >= 0);
 
     if (oldTierIndex >= 0) {
       _tierList.itemsMatrix[oldTierIndex].removeWhere((i) => i.id == item.id);
@@ -152,10 +147,5 @@ class EditorProvider with ChangeNotifier {
             .fold(0, (sum, tierItems) => sum + tierItems.length);
 
     return totalItems >= 50;
-  }
-
-  void save(Function(TierList) saveCallback) {
-    saveCallback(_tierList);
-    notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive/hive.dart';
 
 import 'package:tierlist/data/models/tier.dart';
@@ -28,4 +29,7 @@ class TierItemText extends TierListItem {
       text: text ?? this.text,
     );
   }
+
+  @override
+  String toString() => 'TierItemText(text: $text), ${super.toString()}';
 }

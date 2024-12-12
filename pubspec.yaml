@@ -13,9 +13,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
-  
   cupertino_icons: ^1.0.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -54,26 +51,11 @@ flutter:
   assets:
     - assets/images/
     - lib/data/sources/images/list_images/
+    - lib/data/sources/images/lists/food/
+    - lib/data/sources/images/lists/sports/
+    - lib/data/sources/images/lists/places/
   fonts:
-    - family: Food Zone
-      fonts:
-        - asset: assets/fonts/foodzone.ttf
     - family: Coffee Crafts
       fonts:
         - asset: assets/fonts/coffeecrafts.ttf
-    - family: Cafe Francoise
-      fonts:
-        - asset: assets/fonts/cafefrancoise.otf
-    - family: Cartoonist
-      fonts:
-        - asset: assets/fonts/cartoonist.ttf
-    - family: Keep Calm
-      fonts:
-        - asset: assets/fonts/keepcalm.ttf
-    - family: League Spartan
-      fonts:
-        - asset: assets/fonts/leaguespartan.ttf
-    - family: Mouse Memoirs
-      fonts:
-        - asset: assets/fonts/mousememoirs.ttf
   

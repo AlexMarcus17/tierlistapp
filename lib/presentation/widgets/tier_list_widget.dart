@@ -283,7 +283,7 @@ class _TierListWidgetState extends State<TierListWidget> {
                                                   textAlign: TextAlign.center,
                                                   controller:
                                                       textEditingController,
-                                                  maxLength: 15,
+                                                  maxLength: 20,
                                                   decoration: InputDecoration(
                                                     enabledBorder:
                                                         UnderlineInputBorder(
@@ -484,11 +484,18 @@ class _TierListWidgetState extends State<TierListWidget> {
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(15)),
-                                                child: Image.file(
-                                                  File((item as TierItemImage)
-                                                      .imageFile),
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                child: ((item as TierItemImage)
+                                                            .imageFile)
+                                                        .startsWith(
+                                                            "lib/data/sources/images/lists")
+                                                    ? Image.asset(
+                                                        (item).imageFile,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.file(
+                                                        File((item).imageFile),
+                                                        fit: BoxFit.cover,
+                                                      ),
                                               ),
                                             ),
                                             const SizedBox(height: 10),
@@ -584,10 +591,16 @@ class _TierListWidgetState extends State<TierListWidget> {
               )
             : ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  File((item as TierItemImage).imageFile),
-                  fit: BoxFit.cover,
-                ),
+                child: ((item as TierItemImage).imageFile)
+                        .startsWith("lib/data/sources/images/lists")
+                    ? Image.asset(
+                        (item).imageFile,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File((item).imageFile),
+                        fit: BoxFit.cover,
+                      ),
               ),
       ),
     );

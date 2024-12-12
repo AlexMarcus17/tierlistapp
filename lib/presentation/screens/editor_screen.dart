@@ -288,7 +288,7 @@ class _EditorScreenState extends State<EditorScreen> {
                                                       TextField(
                                                         controller:
                                                             addtextcontroller,
-                                                        maxLength: 15,
+                                                        maxLength: 20,
                                                         decoration:
                                                             InputDecoration(
                                                           hintText:
@@ -434,6 +434,20 @@ class _EditorScreenState extends State<EditorScreen> {
                                 context,
                                 listen: false);
                             editorProvider.addNewImageItem(savedImage);
+                          } else {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Image not supported',
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                  backgroundColor:
+                                      Theme.of(context).primaryColorDark,
+                                ),
+                              );
+                            }
                           }
                         }
                       } else {
